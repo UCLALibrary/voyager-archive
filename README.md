@@ -112,6 +112,6 @@ def project_table():
 The current log format includes:
 * Level: DEBUG, INFO, WARNING, ERROR, or CRITICAL
 * Timestamp via `asctime`
-* Logger name: to distinguish between sources of messages (`django` vs `oral_history` application)
+* Logger name: to distinguish between sources of messages (`django` vs `voyager_archive` application)
 * Module: somewhat redundant with logger name
 * Message: The main thing being logged
