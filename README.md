@@ -30,6 +30,18 @@ The container runs via `docker_scripts/entrypoint.sh`, which
 * Creates a generic Django superuser, if one does not already exist (DEV environment only).
 * Starts the Django application server.
 
+#### pgAdmin container
+
+For convenience during development, pgAdmin 4 is available.
+* [Login page](http://localhost:5050)
+* Log in with `PGADMIN_DEFAULT_*` credentials from `docker_compose.yml`
+* First time: Register a server.
+*  - Name: whatever you want
+*  - Host name: `db`
+*  - Port: `5432`
+*  - Username and password from `.docker-compose_db.env`
+
+
 ### Setup
 1. Clone the repository.
 

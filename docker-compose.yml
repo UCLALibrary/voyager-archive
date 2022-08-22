@@ -28,7 +28,8 @@ services:
     ports:
       - "5050:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: akohler@library.ucla.edu
+      # These are fake, for local docker-compose use
+      PGADMIN_DEFAULT_EMAIL: systems@library.ucla.edu
       PGADMIN_DEFAULT_PASSWORD: admin
     depends_on:
       - db
