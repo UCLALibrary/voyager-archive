@@ -30,6 +30,18 @@ The container runs via `docker_scripts/entrypoint.sh`, which
 * Creates a generic Django superuser, if one does not already exist (DEV environment only).
 * Starts the Django application server.
 
+#### pgAdmin container
+
+For convenience during development, pgAdmin 4 is available.
+* [Login page](http://localhost:5050)
+* Log in with `PGADMIN_DEFAULT_*` credentials from `docker_compose.yml`
+* First time: Register a server.
+*  - Name: whatever you want
+*  - Host name: `db`
+*  - Port: `5432`
+*  - Username and password from `.docker-compose_db.env`
+
+
 ### Setup
 1. Clone the repository.
 
@@ -81,6 +93,8 @@ The container runs via `docker_scripts/entrypoint.sh`, which
 ### Logging
 
 Basic logging is available, with logs captured in `logs/application.log`.  At present, logs from both the custom application code and Django itself are captured.
+
+If the `logs` directory does not exist, you will need to create it.
 
 Logging level is set to `INFO` via `.docker-compose_django.env`.  If there's a regular need/desire for DEBUG level, we can discuss that.
 
