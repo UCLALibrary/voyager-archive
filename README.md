@@ -94,6 +94,8 @@ For convenience during development, pgAdmin 4 is available.
 
 Basic logging is available, with logs captured in `logs/application.log`.  At present, logs from both the custom application code and Django itself are captured.
 
+If the `logs` directory does not exist, you will need to create it.
+
 Logging level is set to `INFO` via `.docker-compose_django.env`.  If there's a regular need/desire for DEBUG level, we can discuss that.
 
 #### How to log
