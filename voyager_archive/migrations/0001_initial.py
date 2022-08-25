@@ -62,13 +62,13 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='AuthorityRecord',
+            name='AuthRecord',
             fields=[
                 ('auth_id', models.DecimalField(decimal_places=0, max_digits=38, primary_key=True, serialize=False)),
                 ('auth_record', models.TextField(blank=True, null=True)),
             ],
             options={
-                'db_table': 'authority_record',
+                'db_table': 'auth_record',
                 'managed': False,
             },
         ),

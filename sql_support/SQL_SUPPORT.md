@@ -14,6 +14,7 @@ will be imported using `ora2pg`.
 
 ```
 # Create all application tables in local PostgreSQL database container.
+# This drops all non-Django tables before creating new ones.
 # -T switch disables pseudo-tty allocation, to avoid misleading error `the input device is not a TTY`
 docker-compose exec -T db psql -U voyager_archive < sql_support/create_psql_tables.sql
 ```
