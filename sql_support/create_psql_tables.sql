@@ -4,32 +4,45 @@
 -- Manually edited to remove unwanted tables and add natural primary keys to others where possible.
 -- See https://docs.library.ucla.edu/x/wyXjDw for notes on table purposes.
 
+-- Drop all archive tables, except those managed by Django
+DO $$ DECLARE
+    r RECORD;
+BEGIN
+    FOR r IN (SELECT tablename FROM pg_tables 
+			   WHERE schemaname = 'public' 
+			   AND tableowner = 'voyager_archive'
+			   AND tablename NOT LIKE 'auth_group%'
+			   AND tablename NOT LIKE 'auth_permission%'
+			   AND tablename NOT LIKE 'auth_user%'
+			   AND tablename NOT LIKE 'django%'
+			 ) LOOP
+        EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
+    END LOOP;
+END $$
+;
+
 SET client_encoding TO 'UTF8';
 
 \set ON_ERROR_STOP ON
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS account_location ;
 CREATE TABLE account_location (
 	account_id numeric(38),
 	account_location numeric(38)
 ) ;
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS account_note ;
 CREATE TABLE account_note (
 	account_id numeric(38),
 	vendor_id numeric(38),
 	note varchar(1900)
 ) ;
 
-DROP TABLE IF EXISTS address_type ;
 CREATE TABLE address_type (
 	address_type numeric(38) primary key,
 	address_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS adjust_reason ;
 CREATE TABLE adjust_reason (
 	reason_id numeric(38) primary key,
 	reason_text varchar(50),
@@ -38,7 +51,6 @@ CREATE TABLE adjust_reason (
 	vendor_id numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS bib_master ;
 CREATE TABLE bib_master (
 	bib_id numeric(38) primary key,
 	library_id numeric(38),
@@ -55,7 +67,6 @@ CREATE TABLE bib_master (
 ) ;
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS bib_mfhd ;
 CREATE TABLE bib_mfhd (
 	bib_id numeric(38),
 	mfhd_id numeric(38)
@@ -63,7 +74,6 @@ CREATE TABLE bib_mfhd (
 CREATE UNIQUE INDEX bib_mfhd_bibid_mfhdid_idx ON bib_mfhd (bib_id, mfhd_id);
 CREATE UNIQUE INDEX bib_mfhd_mfhdid_bibid_idx ON bib_mfhd (mfhd_id, bib_id);
 
-DROP TABLE IF EXISTS call_slip ;
 CREATE TABLE call_slip (
 	call_slip_id numeric(38) primary key,
 	print_group_id numeric(38),
@@ -90,7 +100,6 @@ CREATE TABLE call_slip (
 	reply_note varchar(100)
 ) ;
 
-DROP TABLE IF EXISTS call_slip_archive ;
 CREATE TABLE call_slip_archive (
 	archive_id numeric(38) primary key,
 	print_group_id numeric(38),
@@ -117,13 +126,11 @@ CREATE TABLE call_slip_archive (
 	reply_note varchar(100)
 ) ;
 
-DROP TABLE IF EXISTS call_slip_status_type ;
 CREATE TABLE call_slip_status_type (
 	status_type numeric(38) primary key,
 	status_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS circ_transactions ;
 CREATE TABLE circ_transactions (
 	circ_transaction_id numeric(38) primary key,
 	item_id numeric(38),
@@ -154,7 +161,6 @@ CREATE TABLE circ_transactions (
 	db_id numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS circ_trans_archive ;
 CREATE TABLE circ_trans_archive (
 	circ_transaction_id numeric(38) primary key,
 	item_id numeric(38),
@@ -184,7 +190,6 @@ CREATE TABLE circ_trans_archive (
 	db_id numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS circ_trans_exception ;
 CREATE TABLE circ_trans_exception (
 	circ_trans_except_id numeric(38) primary key,
 	item_id numeric(38),
@@ -196,20 +201,17 @@ CREATE TABLE circ_trans_exception (
 	trans_except_oper_id varchar(10)
 ) ;
 
-DROP TABLE IF EXISTS circ_trans_except_type ;
 CREATE TABLE circ_trans_except_type (
 	exception_type numeric(38) primary key,
 	exception_desc varchar(50)
 ) ;
 
-DROP TABLE IF EXISTS claim_types ;
 CREATE TABLE claim_types (
 	claim_type numeric(38) primary key,
 	edi_code varchar(11),
 	claim_type_desc varchar(70)
 ) ;
 
-DROP TABLE IF EXISTS currency_conversion ;
 CREATE TABLE currency_conversion (
 	currency_id numeric(38) primary key,
 	country_name varchar(75),
@@ -227,7 +229,6 @@ CREATE TABLE currency_conversion (
 	decimal_delimiter char(1)
 ) ;
 
-DROP TABLE IF EXISTS fine_fee ;
 CREATE TABLE fine_fee (
 	fine_fee_id numeric(38) primary key,
 	patron_id numeric(38),
@@ -249,7 +250,6 @@ CREATE TABLE fine_fee (
 	modify_loc_id numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS fine_fee_transactions ;
 CREATE TABLE fine_fee_transactions (
 	fine_fee_trans_id numeric(38) primary key,
 	fine_fee_id numeric(38),
@@ -262,13 +262,11 @@ CREATE TABLE fine_fee_transactions (
 	trans_note varchar(1000)
 ) ;
 
-DROP TABLE IF EXISTS fine_fee_trans_method ;
 CREATE TABLE fine_fee_trans_method (
 	method_type numeric(38) primary key,
 	method_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS fine_fee_trans_type ;
 CREATE TABLE fine_fee_trans_type (
 	transaction_type numeric(38) primary key,
 	transaction_desc varchar(25),
@@ -276,14 +274,12 @@ CREATE TABLE fine_fee_trans_type (
 	type_demerit char(1)
 ) ;
 
-DROP TABLE IF EXISTS fine_fee_type ;
 CREATE TABLE fine_fee_type (
 	fine_fee_type numeric(38) primary key,
 	fine_fee_desc varchar(25),
 	fine_fee_code varchar(10)
 ) ;
 
-DROP TABLE IF EXISTS fiscal_period ;
 CREATE TABLE fiscal_period (
 	fiscal_period_id numeric(38) primary key,
 	fiscal_period_name varchar(25),
@@ -292,7 +288,6 @@ CREATE TABLE fiscal_period (
 ) ;
 
 -- Fund and ledger combined are unique, no PK
-DROP TABLE IF EXISTS fund ;
 CREATE TABLE fund (
 	fund_id numeric(38),
 	ledger_id numeric(38),
@@ -332,7 +327,6 @@ CREATE TABLE fund (
 CREATE UNIQUE INDEX fund_idx ON fund (ledger_id, fund_id);
 
 -- Fund and ledger combined are unique, no PK
-DROP TABLE IF EXISTS fund_note ;
 CREATE TABLE fund_note (
 	fund_id numeric(38),
 	ledger_id numeric(38),
@@ -341,7 +335,6 @@ CREATE TABLE fund_note (
 CREATE UNIQUE INDEX fund_note_idx ON fund_note (fund_id, ledger_id);
 
 -- Confirmed all payment_id are unique
-DROP TABLE IF EXISTS fund_payment ;
 CREATE TABLE fund_payment (
 	payment_id numeric(38) primary key,
 	split_fund_seq numeric(38),
@@ -351,7 +344,6 @@ CREATE TABLE fund_payment (
 	amount numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS fund_transaction ;
 CREATE TABLE fund_transaction (
 	fund_id numeric(38),
 	audit_id numeric(38) primary key,
@@ -365,7 +357,6 @@ CREATE TABLE fund_transaction (
 	note varchar(1900)
 ) ;
 
-DROP TABLE IF EXISTS fund_type ;
 CREATE TABLE fund_type (
 	fund_type_id numeric(38) primary key,
 	fund_type_name varchar(25),
@@ -377,7 +368,6 @@ CREATE TABLE fund_type (
 	underexpend numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS hold_recall ;
 CREATE TABLE hold_recall (
 	hold_recall_id numeric(38) primary key,
 	patron_id numeric(38),
@@ -402,7 +392,6 @@ CREATE TABLE hold_recall (
 	modify_location_id numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS hold_recall_archive ;
 CREATE TABLE hold_recall_archive (
 	hold_recall_id numeric(38) primary key,
 	hold_recall_type char(1),
@@ -428,7 +417,6 @@ CREATE TABLE hold_recall_archive (
 ) ;
 
 -- hold_recall_id is not unique, no PK
-DROP TABLE IF EXISTS hold_recall_items ;
 CREATE TABLE hold_recall_items (
 	hold_recall_id numeric(38),
 	item_id numeric(38),
@@ -439,7 +427,6 @@ CREATE TABLE hold_recall_items (
 ) ;
 
 -- hold_recall_id is unique here
-DROP TABLE IF EXISTS hold_recall_item_archive ;
 CREATE TABLE hold_recall_item_archive (
 	hold_recall_id numeric(38) primary key,
 	item_id numeric(38),
@@ -448,13 +435,11 @@ CREATE TABLE hold_recall_item_archive (
 	hold_recall_status_date timestamp
 ) ;
 
-DROP TABLE IF EXISTS hold_recall_status ;
 CREATE TABLE hold_recall_status (
 	hr_status_type numeric(38) primary key,
 	hr_status_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS invoice ;
 CREATE TABLE invoice (
 	invoice_id numeric(38) primary key,
 	vendor_id numeric(38),
@@ -487,7 +472,6 @@ CREATE TABLE invoice (
 ) ;
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS invoice_funds ;
 CREATE TABLE invoice_funds (
 	invoice_id numeric(38),
 	ledger_id numeric(38),
@@ -499,7 +483,6 @@ CREATE TABLE invoice_funds (
 ) ;
 CREATE UNIQUE INDEX invoice_funds_idx ON invoice_funds (invoice_id, ledger_id, fund_id);
 
-DROP TABLE IF EXISTS invoice_line_item ;
 CREATE TABLE invoice_line_item (
 	inv_line_item_id numeric(38) primary key,
 	invoice_id numeric(38),
@@ -517,7 +500,6 @@ CREATE TABLE invoice_line_item (
 ) ;
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS invoice_line_item_funds ;
 CREATE TABLE invoice_line_item_funds (
 	copy_id numeric(38),
 	inv_line_item_id numeric(38),
@@ -530,26 +512,22 @@ CREATE TABLE invoice_line_item_funds (
 ) ;
 CREATE UNIQUE INDEX invoice_line_item_funds_idx ON invoice_line_item_funds (copy_id, split_fund_seq, inv_line_item_id);
 
-DROP TABLE IF EXISTS invoice_note ;
 CREATE TABLE invoice_note (
 	invoice_id numeric(38) primary key,
 	note varchar(1900)
 ) ;
 
-DROP TABLE IF EXISTS invoice_status ;
 CREATE TABLE invoice_status (
 	invoice_status numeric(38) primary key,
 	invoice_status_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS inv_line_item_notes ;
 CREATE TABLE inv_line_item_notes (
 	inv_line_item_id numeric(38) primary key,
 	invoice_id numeric(38),
 	note varchar(1900)
 ) ;
 
-DROP TABLE IF EXISTS item ;
 CREATE TABLE item (
 	item_id numeric(38) primary key,
 	perm_location numeric(38),
@@ -581,7 +559,6 @@ CREATE TABLE item (
 ) ;
 
 -- 1 to many, no PK
-DROP TABLE IF EXISTS item_barcode ;
 CREATE TABLE item_barcode (
 	item_id numeric(38),
 	item_barcode varchar(30),
@@ -589,14 +566,12 @@ CREATE TABLE item_barcode (
 	barcode_status_date timestamp
 ) ;
 
-DROP TABLE IF EXISTS item_barcode_status ;
 CREATE TABLE item_barcode_status (
 	barcode_status_type numeric(38) primary key,
 	barcode_status_desc varchar(25)
 ) ;
 
 -- 1 to many, no PK
-DROP TABLE IF EXISTS item_note ;
 CREATE TABLE item_note (
 	item_id numeric(38),
 	item_note varchar(1000),
@@ -604,14 +579,12 @@ CREATE TABLE item_note (
 	last_modified timestamp
 ) ;
 
-DROP TABLE IF EXISTS item_note_type ;
 CREATE TABLE item_note_type (
 	note_type bigint primary key,
 	note_desc varchar(20)
 ) ;
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS item_stats ;
 CREATE TABLE item_stats (
 	item_id numeric(38),
 	item_stat_id numeric(38),
@@ -619,7 +592,6 @@ CREATE TABLE item_stats (
 ) ;
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS item_status ;
 CREATE TABLE item_status (
 	item_id numeric(38),
 	item_status numeric(38),
@@ -627,20 +599,17 @@ CREATE TABLE item_status (
 	item_status_operator varchar(10)
 ) ;
 
-DROP TABLE IF EXISTS item_status_type ;
 CREATE TABLE item_status_type (
 	item_status_type numeric(38) NOT NULL primary key,
 	item_status_desc varchar(25) NOT NULL
 ) ;
 
-DROP TABLE IF EXISTS item_stat_code ;
 CREATE TABLE item_stat_code (
 	item_stat_id numeric(38) primary key,
 	item_stat_code varchar(3),
 	item_stat_code_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS item_type ;
 CREATE TABLE item_type (
 	item_type_id numeric(38) primary key,
 	item_type_code varchar(10),
@@ -648,7 +617,6 @@ CREATE TABLE item_type (
 	item_type_display varchar(40)
 ) ;
 
-DROP TABLE IF EXISTS ledger ;
 CREATE TABLE ledger (
 	ledger_id numeric(38) primary key,
 	fiscal_year_id numeric(38),
@@ -675,13 +643,11 @@ CREATE TABLE ledger (
 	new_ledger_id numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS ledger_note ;
 CREATE TABLE ledger_note (
 	ledger_id numeric(38) primary key,
 	note varchar(1900)
 ) ;
 
-DROP TABLE IF EXISTS line_item ;
 CREATE TABLE line_item (
 	line_item_id numeric(38) primary key,
 	po_id numeric(38),
@@ -711,7 +677,6 @@ CREATE TABLE line_item (
 ) ;
 
 -- 1-to-many, no PK
-DROP TABLE IF EXISTS line_item_copy ;
 CREATE TABLE line_item_copy (
 	line_item_id numeric(38),
 	location_id numeric(38),
@@ -722,7 +687,6 @@ CREATE TABLE line_item_copy (
 ) ;
 CREATE UNIQUE INDEX line_item_copy_idx ON line_item_copy (line_item_id, location_id);
 
-DROP TABLE IF EXISTS line_item_copy_status ;
 CREATE TABLE line_item_copy_status (
 	line_item_id numeric(38),
 	item_id numeric(38),
@@ -736,7 +700,6 @@ CREATE TABLE line_item_copy_status (
 ) ;
 
 -- 1-to-many, no PK
-DROP TABLE IF EXISTS line_item_funds ;
 CREATE TABLE line_item_funds (
 	copy_id numeric(38),
 	split_fund_seq numeric(38),
@@ -750,7 +713,6 @@ CREATE TABLE line_item_funds (
 ) ;
 CREATE UNIQUE INDEX line_item_funds_idx ON line_item_funds (copy_id, split_fund_seq);
 
-DROP TABLE IF EXISTS line_item_notes ;
 CREATE TABLE line_item_notes (
 	line_item_id numeric(38) primary key,
 	po_id numeric(38),
@@ -758,19 +720,16 @@ CREATE TABLE line_item_notes (
 	note varchar(1900)
 ) ;
 
-DROP TABLE IF EXISTS line_item_status ;
 CREATE TABLE line_item_status (
 	line_item_status numeric(38) primary key,
 	line_item_status_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS line_item_type ;
 CREATE TABLE line_item_type (
 	line_item_type numeric(38) primary key,
 	line_item_type_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS location ;
 CREATE TABLE location (
 	location_id numeric(38) primary key,
 	location_code varchar(10),
@@ -784,7 +743,6 @@ CREATE TABLE location (
 ) ;
 
 -- 1-to-many, no PK
-DROP TABLE IF EXISTS mfhd_item ;
 CREATE TABLE mfhd_item (
 	mfhd_id numeric(38),
 	item_id numeric(38),
@@ -797,7 +755,6 @@ CREATE TABLE mfhd_item (
 CREATE UNIQUE INDEX mfhd_item_item_idx ON mfhd_item (item_id, mfhd_id);
 CREATE UNIQUE INDEX mfhd_item_mfhd_idx ON mfhd_item (mfhd_id, item_id);
 
-DROP TABLE IF EXISTS mfhd_master ;
 CREATE TABLE mfhd_master (
 	mfhd_id numeric(38) primary key,
 	location_id numeric(38),
@@ -820,13 +777,11 @@ CREATE TABLE mfhd_master (
 	export_date timestamp
 ) ;
 
-DROP TABLE IF EXISTS note_type ;
 CREATE TABLE note_type (
 	note_type numeric(38) primary key,
 	note_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS no_fill_reason ;
 CREATE TABLE no_fill_reason (
 	reason_id numeric(38) primary key,
 	reason_code varchar(10),
@@ -834,7 +789,6 @@ CREATE TABLE no_fill_reason (
 	suppress char(1)
 ) ;
 
-DROP TABLE IF EXISTS operator ;
 CREATE TABLE operator (
 	operator_id varchar(10) primary key,
 	first_name varchar(25),
@@ -852,13 +806,11 @@ CREATE TABLE operator (
 	restrict_password_change char(1) NOT NULL DEFAULT 'N'
 ) ;
 
-DROP TABLE IF EXISTS order_types ;
 CREATE TABLE order_types (
 	order_type numeric(38) primary key,
 	order_type_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS patron ;
 CREATE TABLE patron (
 	patron_id numeric(38) primary key,
 	name_type numeric(38),
@@ -927,7 +879,6 @@ CREATE TABLE patron (
 	department varchar(50)
 ) ;
 
-DROP TABLE IF EXISTS patron_address ;
 CREATE TABLE patron_address (
 	address_id numeric(38),
 	patron_id numeric(38),
@@ -951,7 +902,6 @@ CREATE TABLE patron_address (
 CREATE UNIQUE INDEX patron_address_idx ON patron_address (address_id);
 CREATE INDEX patron_address_ptn_idx ON patron_address (patron_id);
 
-DROP TABLE IF EXISTS patron_barcode ;
 CREATE TABLE patron_barcode (
 	patron_barcode_id numeric(38),
 	patron_id numeric(38),
@@ -968,13 +918,11 @@ CREATE INDEX patron_barcode_pgid_idx ON patron_barcode (patron_group_id);
 CREATE UNIQUE INDEX patron_barcode_ptn_bcd_id_idx ON patron_barcode (patron_barcode_id);
 CREATE INDEX patron_barcode_ptn_idx ON patron_barcode (patron_id);
 
-DROP TABLE IF EXISTS patron_barcode_status ;
 CREATE TABLE patron_barcode_status (
 	barcode_status_type numeric(38),
 	barcode_status_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS patron_group ;
 CREATE TABLE patron_group (
 	patron_group_id numeric(38),
 	patron_group_code varchar(10),
@@ -990,14 +938,12 @@ CREATE TABLE patron_group (
 ) ;
 CREATE UNIQUE INDEX patron_group_idx ON patron_group (patron_group_id);
 
-DROP TABLE IF EXISTS patron_group_item_type ;
 CREATE TABLE patron_group_item_type (
 	patron_group_id bigint,
 	item_type_id bigint,
 	charge_limit bigint
 ) ;
 
-DROP TABLE IF EXISTS patron_group_policy ;
 CREATE TABLE patron_group_policy (
 	circ_group_id numeric(38),
 	patron_group_id numeric(38),
@@ -1049,13 +995,11 @@ CREATE TABLE patron_group_policy (
 ) ;
 CREATE INDEX patron_group_policy_idx ON patron_group_policy (circ_group_id, patron_group_id);
 
-DROP TABLE IF EXISTS patron_name_type ;
 CREATE TABLE patron_name_type (
 	patron_name_type numeric(38),
 	patron_name_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS patron_notes ;
 CREATE TABLE patron_notes (
 	patron_note_id numeric(38),
 	patron_id numeric(38),
@@ -1068,7 +1012,6 @@ CREATE TABLE patron_notes (
 CREATE INDEX patron_notes_pat_id_idx ON patron_notes (patron_id);
 CREATE UNIQUE INDEX patron_notes_pat_note_id_idx ON patron_notes (patron_note_id);
 
-DROP TABLE IF EXISTS patron_phone ;
 CREATE TABLE patron_phone (
 	patron_phone_id numeric(38),
 	address_id numeric(38),
@@ -1080,7 +1023,6 @@ CREATE TABLE patron_phone (
 CREATE INDEX patron_phone_addr_id_idx ON patron_phone (address_id);
 CREATE UNIQUE INDEX patron_phone_id_idx ON patron_phone (patron_phone_id);
 
-DROP TABLE IF EXISTS patron_stats ;
 CREATE TABLE patron_stats (
 	patron_id numeric(38),
 	patron_stat_id numeric(38),
@@ -1089,7 +1031,6 @@ CREATE TABLE patron_stats (
 CREATE INDEX patron_stats_pst_id_idx ON patron_stats (patron_stat_id);
 CREATE INDEX patron_stats_ptnid_idx ON patron_stats (patron_id);
 
-DROP TABLE IF EXISTS patron_stat_code ;
 CREATE TABLE patron_stat_code (
 	patron_stat_id numeric(38),
 	patron_stat_code varchar(3),
@@ -1098,14 +1039,12 @@ CREATE TABLE patron_stat_code (
 CREATE UNIQUE INDEX patron_stat_code_idx ON patron_stat_code (patron_stat_id);
 CREATE UNIQUE INDEX patron_stat_code_idx2 ON patron_stat_code (patron_stat_code);
 
-DROP TABLE IF EXISTS phone_type ;
 CREATE TABLE phone_type (
 	phone_type numeric(38) primary key,
 	phone_desc varchar(25)
 ) ;
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS po_funds ;
 CREATE TABLE po_funds (
 	po_id numeric(38),
 	ledger_id numeric(38),
@@ -1117,27 +1056,23 @@ CREATE TABLE po_funds (
 ) ;
 CREATE UNIQUE INDEX po_funds_idx ON po_funds (po_id, ledger_id, fund_id);
 
-DROP TABLE IF EXISTS po_notes ;
 CREATE TABLE po_notes (
 	po_id numeric(38) primary key,
 	print_note varchar(60),
 	note varchar(1900)
 ) ;
 
-DROP TABLE IF EXISTS po_status ;
 CREATE TABLE po_status (
 	po_status numeric(38) primary key,
 	po_status_desc varchar(25)
 ) ;
 
-DROP TABLE IF EXISTS po_type ;
 CREATE TABLE po_type (
 	po_type numeric(38) primary key,
 	po_type_desc varchar(25)
 ) ;
 
 -- 1-to-many, no PK - payment_id is not unique
-DROP TABLE IF EXISTS price_adjustment ;
 CREATE TABLE price_adjustment (
 	object_type char(1),
 	object_id numeric(38),
@@ -1150,7 +1085,6 @@ CREATE TABLE price_adjustment (
 CREATE UNIQUE INDEX price_adjustment_idx ON price_adjustment (object_type, object_id, sequence);
 
 -- Bridge table, no PK
-DROP TABLE IF EXISTS proxy_patron ;
 CREATE TABLE proxy_patron (
 	patron_barcode_id numeric(38),
 	patron_barcode_id_proxy numeric(38),
@@ -1160,7 +1094,6 @@ CREATE TABLE proxy_patron (
 	expiration_date timestamp
 ) ;
 
-DROP TABLE IF EXISTS purchase_order ;
 CREATE TABLE purchase_order (
 	po_id numeric(38) primary key,
 	vendor_id numeric(38),
@@ -1199,7 +1132,6 @@ CREATE TABLE purchase_order (
 
 
 -- 1-to-many, no PK
-DROP TABLE IF EXISTS reserve_item_history ;
 CREATE TABLE reserve_item_history (
 	item_id numeric(38),
 	effect_date timestamp,
@@ -1207,7 +1139,6 @@ CREATE TABLE reserve_item_history (
 	reserve_charges numeric(38)
 ) ;
 
-DROP TABLE IF EXISTS vendor ;
 CREATE TABLE vendor (
 	vendor_id numeric(38) primary key,
 	vendor_type char(2),
@@ -1229,7 +1160,6 @@ CREATE TABLE vendor (
 	update_opid varchar(10)
 ) ;
 
-DROP TABLE IF EXISTS vendor_account ;
 CREATE TABLE vendor_account (
 	account_id numeric(38) primary key,
 	vendor_id numeric(38),
@@ -1242,7 +1172,6 @@ CREATE TABLE vendor_account (
 	status_date timestamp
 ) ;
 
-DROP TABLE IF EXISTS vendor_address ;
 CREATE TABLE vendor_address (
 	address_id numeric(38) primary key,
 	vendor_id numeric(38),
@@ -1268,7 +1197,6 @@ CREATE TABLE vendor_address (
 	modify_operator_id varchar(10)
 ) ;
 
-DROP TABLE IF EXISTS vendor_bank_info ;
 CREATE TABLE vendor_bank_info (
 	vendor_id numeric(38) primary key,
 	account_number varchar(25),
@@ -1290,14 +1218,12 @@ CREATE TABLE vendor_bank_info (
 	modify_operator_id varchar(10)
 ) ;
 
-DROP TABLE IF EXISTS vendor_note ;
 CREATE TABLE vendor_note (
 	vendor_id numeric(38) primary key,
 	note varchar(1900)
 ) ;
 
 -- 1-to-many, no PK
-DROP TABLE IF EXISTS vendor_phone ;
 CREATE TABLE vendor_phone (
 	address_id numeric(38),
 	phone_type numeric(38),
@@ -1307,7 +1233,6 @@ CREATE TABLE vendor_phone (
 ) ;
 CREATE UNIQUE INDEX vendor_phone_idx ON vendor_phone (address_id, phone_type, phone_number);
 
-DROP TABLE IF EXISTS vendor_types ;
 CREATE TABLE vendor_types (
 	vendor_type char(2) primary key,
 	vendor_type_desc char(40)
@@ -1318,19 +1243,16 @@ CREATE TABLE vendor_types (
 */
 
 -- auth_record does not conflict with Django's Auth* models
-DROP TABLE IF EXISTS auth_record ;
 CREATE TABLE auth_record (
 	auth_id numeric(38) primary key,
 	auth_record text
 ) ;
 
-DROP TABLE IF EXISTS bib_record ;
 CREATE TABLE bib_record (
 	bib_id numeric(38) primary key,
 	bib_record text
 ) ;
 
-DROP TABLE IF EXISTS mfhd_record ;
 CREATE TABLE mfhd_record (
 	mfhd_id numeric(38) primary key,
 	mfhd_record text
