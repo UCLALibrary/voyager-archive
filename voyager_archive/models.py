@@ -48,13 +48,13 @@ class AdjustReason(models.Model):
         db_table = 'adjust_reason'
 
 
-class AuthorityRecord(models.Model):
+class AuthRecord(models.Model):
     auth_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
     auth_record = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'authority_record'
+        db_table = 'auth_record'
 
 
 class BibMaster(models.Model):

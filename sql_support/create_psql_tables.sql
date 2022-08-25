@@ -1317,9 +1317,9 @@ CREATE TABLE vendor_types (
 * Non-Voyager tables, replacing auth_data / bib_data / mfhd_data
 */
 
--- Using authority_record to avoid confusion with Django's Auth models
-DROP TABLE IF EXISTS authority_record ;
-CREATE TABLE authority_record (
+-- auth_record does not conflict with Django's Auth* models
+DROP TABLE IF EXISTS auth_record ;
+CREATE TABLE auth_record (
 	auth_id numeric(38) primary key,
 	auth_record text
 ) ;
