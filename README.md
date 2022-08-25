@@ -90,6 +90,13 @@ For convenience during development, pgAdmin 4 is available.
 
    `$ docker-compose down`
 
+### Database setup (Initial)
+
+Since this uses a legacy database which is not managed by Django, the database schema can't be created by Django's models.
+Tables and views need to be created by direct SQL.  See `sql_support/SQL_SUPPORT.md` for more information.
+
+Django will not apply any migrations or models for legacy database objects.
+
 ### Logging
 
 Basic logging is available, with logs captured in `logs/application.log`.  At present, logs from both the custom application code and Django itself are captured.
