@@ -21,3 +21,47 @@ docker-compose exec -T db psql -U voyager_archive < sql_support/create_psql_tabl
 
 If other database objects are required, like views, create separate file(s) with their creation scripts
 and document their creation above.
+
+## Sample data
+
+`sample_data.sql` contains selected data exported from the original Voyager database
+by ora2pg, in a format which the PostgreSQL `psql` client can import.
+
+The data should allow basic testing of all searches supported by the Django application's
+form:
+* Authority records by auth_id (`3228675`)
+* Bibliographic records by bib_id (`9411434`)
+* Holdings (MFHD) records by mfhd_id (`12507598`)
+* Item records by item_barcode (`L0112367321`)
+* Purchase orders by po_number (`EAL518017`)
+* Invoices by invoice_number (`UCLA-058A`)
+* Vendors by vendor_code (`YAGI`)
+
+The sample data file also includes fund and ledger information associated with the sample invoices.
+
+Finally, it also contains several lookup tables which are commonly used with purchase orders
+and invoices:
+* po_status
+* po_type
+* invoice_status
+* item_barcode_status
+* line_item_status
+
+As additional sample data is added, update this documentation as needed.
+
+### Loading sample data
+
+The typical Django fixtures won't work (or are very awkward) with this legacy database.
+Many of the Django models have an artificial primary key, which does not exist on the legacy tables.
+This causes the normal `manage.py dumpdata` command to fail.
+
+Since the real data is / will be loaded via `psql`, bypassing Django's ORM anyhow, the sample data 
+is loaded the same way.
+
+```
+# Rebuild database objects, from above:
+docker-compose exec -T db psql -U voyager_archive < sql_support/create_psql_tables.sql
+
+# Then load sample data:
+docker-compose exec -T db psql -U voyager_archive < sql_support/sample_data.sql
+```
