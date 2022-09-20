@@ -75,9 +75,9 @@ For convenience during development, pgAdmin 4 is available.
    $ docker-compose exec django python manage.py shell
    # Apply new migrations without a restart
    $ docker-compose exec django python manage.py migrate
-   # Populate database with seed data (NOT YET......)
-   $ docker-compose exec django python manage.py loaddata --app voyager_archive seed-data
    ```
+To create database objects and load sample data, see [Database setup](#database-setup-initial).
+
 7. Connect to the running application via browser
 
    [Application](http://127.0.0.1:8000) and [Admin](http://127.0.0.1:8000/admin)
