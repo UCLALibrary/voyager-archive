@@ -1,10 +1,3 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
 
@@ -1573,3 +1566,38 @@ class VendorTypes(models.Model):
     class Meta:
         managed = False
         db_table = 'vendor_types'
+
+
+class ItemView(models.Model):
+    item_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    mfhd_id = models.DecimalField(max_digits=38, decimal_places=0)
+    item_enum = models.CharField(max_length=80, blank=True, null=True)
+    chron = models.CharField(max_length=80, blank=True, null=True)
+    year = models.CharField(max_length=20, blank=True, null=True)
+    caption = models.CharField(max_length=256, blank=True, null=True)
+    freetext = models.CharField(max_length=256, blank=True, null=True)
+    item_barcode = models.CharField(max_length=30, blank=True, null=True)
+    perm_location = models.CharField(max_length=10, blank=True, null=True)
+    temp_location = models.CharField(max_length=10, blank=True, null=True)
+    item_type = models.CharField(max_length=25, blank=True, null=True)
+    temp_item_type = models.CharField(max_length=25, blank=True, null=True)
+    copy_number = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    on_reserve = models.CharField(max_length=1, blank=True, null=True)
+    reserve_charges = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    pieces = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    price = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    historical_charges = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    historical_browses = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    recalls_placed = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    holds_placed = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    create_date = models.DateTimeField(blank=True, null=True)
+    create_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    create_location = models.CharField(max_length=10, blank=True, null=True)
+    modify_date = models.DateTimeField(blank=True, null=True)
+    modify_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    modify_location = models.CharField(max_length=10, blank=True, null=True)
+    item_sequence_number = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'item_view'

@@ -295,3 +295,28 @@ COPY line_item_status (line_item_status,line_item_status_desc) FROM STDIN;
 
 COMMIT;
 
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY item_type (item_type_id,item_type_code,item_type_name,item_type_display) FROM STDIN;
+2	book	Book	Book
+\.
+
+COMMIT;
+
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY location (location_id,location_code,location_name,location_display_name,location_spine_label,location_opac,suppress_in_opac,library_id,mfhd_count) FROM STDIN;
+146	ea**	EA Stacks**	East Asian Library Stacks Oversize**	E. Asian;Lib.	Y	N	1	18
+\.
+
+COMMIT;
