@@ -26,8 +26,8 @@ def search(request: HttpRequest) -> None:
                 marc_record = get_mfhd_record(search_term)
 
             context = {
-                'form' : form,
-                'marc_record' : marc_record
+                'form': form,
+                'marc_record': marc_record
             }
 
             return render(request, 'voyager_archive/marc_display.html', context)
