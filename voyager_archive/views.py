@@ -25,7 +25,12 @@ def search(request: HttpRequest) -> None:
             elif search_type == 'MFHD_ID':
                 marc_record = get_mfhd_record(search_term)
 
-            return render(request, 'voyager_archive/search.html', {'form': form})
+            context = {
+                'form': form,
+                'marc_record': marc_record
+            }
+
+            return render(request, 'voyager_archive/marc_display.html', context)
     else:
         form = VoyArchiveForm()
         return render(request, 'voyager_archive/search.html', {'form': form})
