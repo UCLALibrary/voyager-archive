@@ -1,0 +1,25 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+<form name="search_archive" id="search_archive" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <br>
+    <button type="submit">Search</button>
+</form>
+<hr/>
+
+
+Data for form values:
+{% for key, val in form.cleaned_data.items %}
+<p>{{ key }} = {{ val }} </p>
+{% endfor %}
+
+Item values:
+<p>{{ item.item_id }}</p>
+<p>{{ item.item_barcode }}</p>
+<p>{{ item.item_type }}</p>
+
+{% endblock %}
