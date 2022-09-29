@@ -18,19 +18,33 @@ def search(request: HttpRequest) -> None:
             logger.info(f'Form data: {form.cleaned_data}')
             search_type = form.cleaned_data['search_type']
             search_term = form.cleaned_data['search_term']
+
+            marc_record = None
+            item = None
             if search_type == 'AUTH_ID':
                 marc_record = get_auth_record(search_term)
             elif search_type == 'BIB_ID':
                 marc_record = get_bib_record(search_term)
             elif search_type == 'MFHD_ID':
                 marc_record = get_mfhd_record(search_term)
+            elif search_type == 'ITEM_BARCODE':
+                item = get_item(search_term)
 
-            context = {
-                'form': form,
-                'marc_record': marc_record
-            }
+            if marc_record:
+                context = {
+                    'form': form,
+                    'marc_record': marc_record
+                }
 
-            return render(request, 'voyager_archive/marc_display.html', context)
+                return render(request, 'voyager_archive/marc_display.html', context)
+            
+            elif item:
+                context = {
+                    'form': form,
+                    'item': item
+                }
+
+                return render(request, 'voyager_archive/item_display.html', context)
     else:
         form = VoyArchiveForm()
         return render(request, 'voyager_archive/search.html', {'form': form})

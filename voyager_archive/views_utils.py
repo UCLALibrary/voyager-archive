@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from pymarc import Record
-from .models import AuthRecord, BibRecord, MfhdRecord
+from .models import AuthRecord, BibRecord, MfhdRecord, ItemView
 
 
 def get_auth_record(auth_id: int) -> list:
@@ -24,3 +24,8 @@ def get_marc_fields(marc_text: str) -> list:
     marc_fields = marc_record.get_fields()
 
     return marc_fields
+
+def get_item(item_barcode: str) -> ItemView:
+    item = get_object_or_404(ItemView, item_barcode=item_barcode)
+
+    return item
