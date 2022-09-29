@@ -19,8 +19,8 @@ def search(request: HttpRequest) -> None:
             search_type = form.cleaned_data['search_type']
             search_term = form.cleaned_data['search_term']
 
-            marc_record = ''
-            item = ''
+            marc_record = None
+            item = None
             if search_type == 'AUTH_ID':
                 marc_record = get_auth_record(search_term)
             elif search_type == 'BIB_ID':

@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="column">
-        <h1>Basic and Acquisitions Information</h1>
+        <h1>Basic Information</h1>
         <table class="data-display">
             <tr>
                 <td>Item Barcode</td>
@@ -37,16 +37,16 @@
                 <td>{{ item.temp_item_type }}</td>
             </tr>
             <tr>
+                <td>Enumeration</td>
+                <td>{{ item.item_enum }}</td>
+            </tr>
+            <tr>
+                <td>Chronology</td>
+                <td>{{ item.chron }}</td>
+            </tr>
+            <tr>
                 <td>Year</td>
                 <td>{{ item.year }}</td>
-            </tr>
-            <tr>
-                <td>Pieces</td>
-                <td>{{ item.pieces }}</td>
-            </tr>
-            <tr>
-                <td>Price</td>
-                <td>{{ item.price }}</td>
             </tr>
             <tr>
                 <td>Caption</td>
@@ -57,13 +57,22 @@
                 <td>{{ item.freetext }}</td>
             </tr>
             <tr>
+                <td>Copy Number</td>
+                <td>{{ item.copy_number }}</td>
+            </tr>
+            <tr>
+                <td>Pieces</td>
+                <td>{{ item.pieces }}</td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>{{ item.price }}</td>
+            </tr>
+            <tr>
                 <td>Item Sequence Number</td>
                 <td>{{ item.item_sequence_number }}</td>
             </tr>
-            <tr>
-                <td>Chron</td>
-                <td>{{ item.chron }}</td>
-            </tr>
+
         </table>
     </div>
     <div class="column">
@@ -107,27 +116,27 @@
         <h1>Metadata Information</h1>
         <table class="data-display">
             <tr>
-                <td>Metadata Creator ID</td>
+                <td>Creator ID</td>
                 <td>{{ item.create_operator_id }}</td>
             </tr>
             <tr>
-                <td>Metadata Creation Date</td>
+                <td>Creation Date</td>
                 <td>{{ item.create_date }}</td>
             </tr>
             <tr>
-                <td>Metadata Creation Location</td>
+                <td>Creation Location</td>
                 <td>{{ item.create_location }}</td>
             </tr>
             <tr>
-                <td>Metadata Modifier ID</td>
+                <td>Modifier ID</td>
                 <td>{{ item.modify_operator_id }}</td>
             </tr>
             <tr>
-                <td>Metadata Modification Date</td>
+                <td>Modification Date</td>
                 <td>{{ item.modify_date }}</td>
             </tr>
             <tr>
-                <td>Metadata Modification Location</td>
+                <td>Modification Location</td>
                 <td>{{ item.modify_location }}</td>
             </tr>
         </table>

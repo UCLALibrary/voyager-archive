@@ -25,7 +25,7 @@ def get_marc_fields(marc_text: str) -> list:
 
     return marc_fields
 
-def get_item(item_barcode: str) -> list:
+def get_item(item_barcode: str) -> ItemView:
     item = get_object_or_404(ItemView, item_barcode=item_barcode)
 
     return item
