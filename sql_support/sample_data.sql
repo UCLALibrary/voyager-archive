@@ -404,3 +404,20 @@ COPY line_item_copy_status (line_item_id,item_id,location_id,copy_id,mfhd_id,lin
 \.
 
 COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY vendor_types (vendor_type,vendor_type_desc) FROM STDIN;
+AG	Agent
+BK	Bookstore
+OT	Other
+PU	Publisher
+SO	Society
+VE	Vendor
+\.
+
+COMMIT;
