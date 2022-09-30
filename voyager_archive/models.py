@@ -1601,3 +1601,186 @@ class ItemView(models.Model):
     class Meta:
         managed = False  # Created from a view. Don't remove.
         db_table = 'item_view'
+
+
+class VendorView(models.Model):
+    vendor_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    vendor_type = models.CharField(max_length=40, blank=True, null=True)
+    vendor_code = models.CharField(max_length=10, blank=True, null=True)
+    vendor_name = models.CharField(max_length=60, blank=True, null=True)
+    institution_id = models.CharField(max_length=25, blank=True, null=True)
+    federal_tax_id = models.CharField(max_length=10, blank=True, null=True)
+    vendor_note = models.CharField(max_length=1900, blank=True, null=True)
+    default_currency = models.CharField(max_length=3, blank=True, null=True)
+    claim_interval = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    claim_count = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    cancel_interval = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    create_date = models.DateTimeField(blank=True, null=True)
+    create_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    modify_date = models.DateTimeField(blank=True, null=True)
+    modify_operator_id = models.CharField(max_length=10, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'vendor_view'
+
+
+class VendorAccountView(models.Model):
+    vendor_account_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    vendor_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    account_number = models.CharField(max_length=25, blank=True, null=True)
+    account_name = models.CharField(max_length=25, blank=True, null=True)
+    deposit = models.CharField(max_length=1, blank=True, null=True)
+    default_po_type = models.CharField(max_length=25, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'vendor_account_view'
+
+
+class InvoiceHeaderView(models.Model):
+    invoice_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    vendor_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    vendor_code = models.CharField(max_length=10, blank=True, null=True)
+    vendor_acccount_number = models.CharField(max_length=25, blank=True, null=True)
+    invoice_number = models.CharField(max_length=25, blank=True, null=True)
+    invoice_date = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=25, blank=True, null=True)
+    status_date = models.DateTimeField(blank=True, null=True)
+    voucher_number = models.CharField(max_length=25, blank=True, null=True)
+    line_item_count = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    currency_code = models.CharField(max_length=3, blank=True, null=True)
+    conversion_rate = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    invoice_total = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    line_item_subtotal = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    adjustments_subtotal = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    total = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    create_date = models.DateTimeField(blank=True, null=True)
+    create_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    create_location = models.CharField(max_length=10, blank=True, null=True)
+    modify_date = models.DateTimeField(blank=True, null=True)
+    modify_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    modify_location = models.CharField(max_length=10, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'invoice_header_view'
+
+
+class InvoiceAdjustmentView(models.Model):
+    payment_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    invoice_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    description = models.CharField(max_length=50, blank=True, null=True)
+    currency_code = models.CharField(max_length=3, blank=True, null=True)
+    raw_amount = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    usd_amount = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    ledger_name = models.CharField(max_length=40, blank=True, null=True)
+    fund_name = models.CharField(max_length=25, blank=True, null=True)
+    fund_code = models.CharField(max_length=10, blank=True, null=True)
+    fau = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'invoice_adjustment_view'
+
+
+# TODO: May need better primary key as inv_line_item_id will sometimes be repeated...
+class InvoiceLineView(models.Model):
+    inv_line_item_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    invoice_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    line_item_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    copy_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    unit_price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    line_price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    quantity = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    piece_identifier = models.CharField(max_length=500, blank=True, null=True)
+    split_fund_seq = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    percentage = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    usd_amount = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    ledger_name = models.CharField(max_length=40, blank=True, null=True)
+    fund_name = models.CharField(max_length=25, blank=True, null=True)
+    fund_code = models.CharField(max_length=10, blank=True, null=True)
+    fau = models.CharField(max_length=50, blank=True, null=True)
+    create_date = models.DateTimeField(blank=True, null=True)
+    create_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    modify_date = models.DateTimeField(blank=True, null=True)
+    modify_operator_id = models.CharField(max_length=10, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'invoice_line_view'
+
+
+class PoHeaderView(models.Model):
+    po_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    vendor_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    vendor_code = models.CharField(max_length=10, blank=True, null=True)
+    vendor_acccount_number = models.CharField(max_length=25, blank=True, null=True)
+    po_number = models.CharField(max_length=25, blank=True, null=True)
+    currency_code = models.CharField(max_length=3, blank=True, null=True)
+    conversion_rate = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    po_type = models.CharField(max_length=25, blank=True, null=True)
+    po_status = models.CharField(max_length=25, blank=True, null=True)
+    status_date = models.DateTimeField(blank=True, null=True)
+    approve_date = models.DateTimeField(blank=True, null=True)
+    approve_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    order_location = models.CharField(max_length=10, blank=True, null=True)
+    ship_location = models.CharField(max_length=10, blank=True, null=True)
+    bill_location = models.CharField(max_length=10, blank=True, null=True)
+    line_item_count = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    note = models.CharField(max_length=1900, blank=True, null=True)
+    line_item_subtotal = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    adjustments_subtotal = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    total = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    create_location = models.CharField(max_length=10, blank=True, null=True)
+    create_date = models.DateTimeField(blank=True, null=True)
+    create_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    modify_location = models.CharField(max_length=10, blank=True, null=True)
+    modify_date = models.DateTimeField(blank=True, null=True)
+    modify_operator_id = models.CharField(max_length=10, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'po_header_view'
+
+
+# TODO: May need better primary key as line_item_id will sometimes be repeated...
+class PoLineItemView(models.Model):
+    line_item_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    po_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    bib_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    copy_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    mfhd_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    location_code = models.CharField(max_length=10, blank=True, null=True)
+    po_number = models.CharField(max_length=25, blank=True, null=True)
+    line_item_type = models.CharField(max_length=25, blank=True, null=True)
+    line_item_status = models.CharField(max_length=25, blank=True, null=True)
+    inv_line_status = models.CharField(max_length=25, blank=True, null=True)
+    status_date = models.DateTimeField(blank=True, null=True)
+    line_item_number = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    piece_identifier = models.CharField(max_length=50, blank=True, null=True)
+    unit_price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    line_price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    split_fund_seq = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    percentage = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    raw_amount = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    usd_amount = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    quantity = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    ledger_name = models.CharField(max_length=40, blank=True, null=True)
+    fund_name = models.CharField(max_length=25, blank=True, null=True)
+    fund_code = models.CharField(max_length=10, blank=True, null=True)
+    fau = models.CharField(max_length=50, blank=True, null=True)
+    note = models.CharField(max_length=1900, blank=True, null=True)
+    requestor = models.CharField(max_length=50, blank=True, null=True)
+    vendor_title_num = models.CharField(max_length=25, blank=True, null=True)
+    vendor_ref_qual = models.CharField(max_length=3, blank=True, null=True)
+    vendor_ref_num = models.CharField(max_length=35, blank=True, null=True)
+    create_date = models.DateTimeField(blank=True, null=True)
+    create_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    modify_date = models.DateTimeField(blank=True, null=True)
+    modify_operator_id = models.CharField(max_length=10, blank=True, null=True)
+    receive_operator_id = models.CharField(max_length=10, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'po_line_item_view'

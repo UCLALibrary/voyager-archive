@@ -320,3 +320,87 @@ COPY location (location_id,location_code,location_name,location_display_name,loc
 \.
 
 COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY line_item_copy_status (line_item_id,item_id,location_id,copy_id,mfhd_id,line_item_status,invoice_item_status,status_date,receive_operator) FROM STDIN;
+75438	0	460	128592	4216553	8	0	2004-10-20 14:56:51	\N
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY line_item (line_item_id,po_id,bib_id,line_item_type,line_item_number,piece_identifier,unit_price,line_price,print_std_num,quantity,prepay_amount,rush,claim_interval,cancel_interval,donor,requestor,vendor_title_num,vendor_ref_qual,vendor_ref_num,create_date,create_opid,update_date,update_opid,edi_ref,standard_num) FROM STDIN;
+75438	73349	4507	3	1	\N	0	0	\N	1	0	\N	0	0	\N	\N	\N	\N	\N	2004-03-30 00:00:00	SYSTEM	2021-06-05 14:22:58	akohler	0	\N
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY invoice (invoice_id,vendor_id,account_id,invoice_number,normal_invoice_number,invoice_status,invoice_status_date,invoice_date,voucher_number,currency_code,conversion_rate,invoice_total,bill_location,invoice_quantity,line_item_count,line_item_subtotal,adjustments_subtotal,total,invoice_create_date,create_opid,create_location_id,invoice_update_date,update_opid,update_location_id,edi_ref,expend_date,check_number,normal_check_number) FROM STDIN;
+132867	2373	0	SPECIALID7874386	SPECIALID7874386	1	2015-07-15 11:49:50	2015-05-20 00:00:00	132867	GBP	64510	10846	202	1	1	9450	1396	10846	2015-07-08 10:34:23	jmking	202	2015-07-20 15:34:03	abaxley	202	0	\N	\N	\N
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY invoice_line_item (inv_line_item_id,invoice_id,line_item_id,unit_price,line_price,quantity,prepay_amount,piece_identifier,create_date,create_opid,update_date,update_opid,edi_ref) FROM STDIN;
+805898	132867	75438	9450	9450	1	0	TM v.13A	2015-07-08 10:35:12	jmking	2015-07-08 10:35:21	jmking	0
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY purchase_order (po_id,vendor_id,account_id,po_type,po_number,normal_po_number,order_location,ship_location,bill_location,currency_code,conversion_rate,po_status,po_status_date,po_create_date,create_opid,po_update_date,update_opid,create_location_id,update_location_id,ship_via,not_needed_after,rush,claim_interval,cancel_interval,line_item_count,line_item_subtotal,adjustments_subtotal,total,edi_ref,po_approve_date,approve_opid,approve_location_id,prepay_conversion_rate) FROM STDIN;
+522069	2264	0	1	MUS522069	MUS522069	292	575	575	EUR	83005	4	2021-05-06 16:26:16	2021-05-06 16:24:52	hlim	2021-05-06 16:26:07	hlim	292	292	\N	\N	0	0	0	1	4400	0	4400	0	2021-05-06 16:26:04	hlim	292	0
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY line_item (line_item_id,po_id,bib_id,line_item_type,line_item_number,piece_identifier,unit_price,line_price,print_std_num,quantity,prepay_amount,rush,claim_interval,cancel_interval,donor,requestor,vendor_title_num,vendor_ref_qual,vendor_ref_num,create_date,create_opid,update_date,update_opid,edi_ref,standard_num) FROM STDIN;
+1087047	522069	9467582	0	1	\N	4400	4400	\N	1	0	\N	\N	\N	\N	\N	\N	\N	\N	2021-05-06 16:25:16	hlim	2021-05-06 16:25:57	hlim	\N	\N
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY line_item_copy_status (line_item_id,item_id,location_id,copy_id,mfhd_id,line_item_status,invoice_item_status,status_date,receive_operator) FROM STDIN;
+1087047	0	288	1185415	12564236	1	6	2021-05-06 16:26:16	hlim
+\.
+
+COMMIT;
