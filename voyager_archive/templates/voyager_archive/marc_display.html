@@ -11,22 +11,39 @@
 </form>
 <hr/>
 
-{% comment %}
-Raw Marc dump
-{% endcomment %}
-
 Data for form values:
 {% for key, val in form.cleaned_data.items %}
 <p>{{ key }} = {{ val }} </p>
 {% endfor %}
 
-<!-- will clean up to clean table -->
-Marc values:
-<p>{{ marc_record.leader }}</p>
 
-{% for field in marc_record.fields %}
-{{ field.tag }}, {{ field.indicators }}, {{ field.subfields }}
-<br>
-{% endfor %}
+<div class="row">
+    <div class="column">
+        <h2>Record Leader: {{ marc_record.leader }}</h1>
+        <table class="data-display">
+            <tr>
+                <th>Tag</th>
+                <th>Indicators</th>
+                <th>Data and Subfields</th>
+            </tr>
+            {% for field in marc_record.fields %}
+            <tr>
+                <td>{{ field.tag }}</td>
+                <td><span class='indicators'>{{ field.indicators }}</span></td>
+                <td>
+                    {{ field.data }}
+                    {% for delimiter, values in field.subfields.items %}
+                        <span class='subfield'>${{ delimiter }}</span>
+                        {% for value in values %}
+                            {{ value }}
+                        {% endfor %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
 
 {% endblock %}

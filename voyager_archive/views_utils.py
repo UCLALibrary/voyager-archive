@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from pymarc import Record
+from pymarc import Record, Field
 from .models import AuthRecord, BibRecord, MfhdRecord, ItemView
 
 
@@ -23,7 +23,7 @@ def get_marc_fields(marc_text: str) -> list:
     marc_record = Record(data=byte_obj)
     marc_fields = marc_record.get_fields()
 
-    marc_record_list = []
+    marc_field_list = []
     marc_record_dict = {}
     marc_record_dict['leader'] = marc_record.leader
 
@@ -31,13 +31,26 @@ def get_marc_fields(marc_text: str) -> list:
 
         tmp_rec_dict = {}
         tmp_rec_dict['tag'] = field.tag
+        if hasattr(field, 'data'):
+            tmp_rec_dict['data'] = field.data
+        
         if hasattr(field, 'indicator1'):
             tmp_rec_dict['indicators'] = f'{field.indicator1} {field.indicator2}'
-        tmp_rec_dict['subfields'] = field.format_field
+        
+        try:
+            subfield_dict = {}
+            subfield_default_dict = field.subfields_as_dict()
+            for delim in subfield_default_dict.keys():
+                subfield_dict[delim] = subfield_default_dict[delim]
+            tmp_rec_dict['subfields'] = subfield_dict
 
-        marc_record_list.append(tmp_rec_dict)
+        except Exception as e:
+            # If subfields don't exist an exception is thrown
+            pass
 
-    marc_record_dict['fields'] = marc_record_list
+        marc_field_list.append(tmp_rec_dict)
+
+    marc_record_dict['fields'] = marc_field_list
 
     return marc_record_dict
 
