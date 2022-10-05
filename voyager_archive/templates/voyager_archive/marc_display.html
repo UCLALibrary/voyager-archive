@@ -20,9 +20,13 @@ Data for form values:
 <p>{{ key }} = {{ val }} </p>
 {% endfor %}
 
+<!-- will clean up to clean table -->
 Marc values:
-{% for field in marc_record %}
-<p>{{ field }}</p>
+<p>{{ marc_record.leader }}</p>
+
+{% for field in marc_record.fields %}
+{{ field.tag }}, {{ field.indicators }}, {{ field.subfields }}
+<br>
 {% endfor %}
 
 {% endblock %}

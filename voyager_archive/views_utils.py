@@ -23,7 +23,23 @@ def get_marc_fields(marc_text: str) -> list:
     marc_record = Record(data=byte_obj)
     marc_fields = marc_record.get_fields()
 
-    return marc_fields
+    marc_record_list = []
+    marc_record_dict = {}
+    marc_record_dict['leader'] = marc_record.leader
+
+    for field in marc_fields:
+
+        tmp_rec_dict = {}
+        tmp_rec_dict['tag'] = field.tag
+        if hasattr(field, 'indicator1'):
+            tmp_rec_dict['indicators'] = f'{field.indicator1} {field.indicator2}'
+        tmp_rec_dict['subfields'] = field.format_field
+
+        marc_record_list.append(tmp_rec_dict)
+
+    marc_record_dict['fields'] = marc_record_list
+
+    return marc_record_dict
 
 def get_item(item_barcode: str) -> ItemView:
     item = get_object_or_404(ItemView, item_barcode=item_barcode)
