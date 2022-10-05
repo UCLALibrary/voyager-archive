@@ -11,12 +11,6 @@
 </form>
 <hr/>
 
-Data for form values:
-{% for key, val in form.cleaned_data.items %}
-<p>{{ key }} = {{ val }} </p>
-{% endfor %}
-
-
 <div class="row">
     <div class="column">
         <h2>Record Leader: {{ marc_record.leader }}</h1>
