@@ -1,3 +1,5 @@
+set client_min_messages = WARNING;
+
 /*  Retrieve all item status descriptions for a given item_id,
     concatenated in a string, separated by ', '. 
     Values are in alphabetical order.
@@ -59,3 +61,27 @@ begin
 	return item_stats;
 end;
 $item_stats$ language plpgsql;
+
+
+/*  Convert foreign currency amount to US amount in cents,
+    given a specific conversion rate.
+    All amounts are whole numbers (e.g., 845 is really 8.45).
+	Database columns use numeric type, thus function uses that instead of integer.
+*/
+drop function if exists get_usd_amount;
+create or replace function get_usd_amount(foreign_amount numeric, conversion_rate numeric) 
+returns numeric as $usd_amount$
+declare
+	usd_amount numeric default 0;
+begin
+	-- Special case for US dollars, which has rate 0
+	if conversion_rate = 0 then
+		return foreign_amount;
+	end if;
+	
+	-- conversion_rate needs to be scaled by 100,000
+	usd_amount = (foreign_amount / conversion_rate) * 100000;
+	-- Round to nearest whole number
+	return round(usd_amount);
+end;
+$usd_amount$ language plpgsql;
