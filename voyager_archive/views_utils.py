@@ -34,3 +34,8 @@ def get_vendor(vendor_code: str) -> VendorView:
     vendor = get_object_or_404(VendorView, vendor_code=vendor_code)
 
     return vendor
+
+def get_vendor_accts(vendor_id: int):
+    vendor_accts = VendorAccountView.objects.filter(vendor_id=vendor_id)
+
+    return vendor_accts

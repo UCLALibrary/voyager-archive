@@ -33,7 +33,7 @@ def search(request: HttpRequest) -> None:
                 item = get_item(search_term)
             elif search_type == 'VENDOR_CODE':
                 vendor = get_vendor(search_term)
-                #vendor_acct_list = get_vendor_accts(vendor.vendor_id)
+                vendor_accts = get_vendor_accts(vendor.vendor_id)
 
             if marc_record:
                 context = {
@@ -54,8 +54,8 @@ def search(request: HttpRequest) -> None:
             elif vendor:
                 context = {
                     'form': form,
-                    'vendor': vendor#,
-                    #'vendor_acct_list': vendor_acct_list
+                    'vendor': vendor,
+                    'vendor_accts': vendor_accts
                 }
 
                 return render(request, 'voyager_archive/vendor_display.html', context)

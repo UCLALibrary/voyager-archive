@@ -76,7 +76,57 @@
                 <td>Modification Operator ID</td>
                 <td>{{ vendor.modify_operator_id }}</td>
             </tr>
+            <tr>
+                <td>Number of Associated Accounts</td>
+                <td>{{ vendor_accts.count }}</td>
+            </tr>
         </table>
+    </div>
+
+    <div class="column">
+        {% if vendor_accts %}
+        <h1>Vendor Account Information</h1>
+        {% for acct in vendor_accts %}
+        <table class="data-display">
+            <tr>
+                <td>Vendor ID</td>
+                <td>{{ acct.vendor_id }}</td>
+            </tr>
+            <tr>
+                <td>Account ID</td>
+                <td>{{ acct.account_id }}</td>
+            </tr>
+            <tr>
+                <td>Account Number</td>
+                <td>{{ acct.account_number }}</td>
+            </tr>
+            <tr>
+                <td>Account Name</td>
+                <td>{{ acct.account_name }}</td>
+            </tr>
+            <tr>
+                <td>Default PO Type</td>
+                <td>{{ acct.default_po_type }}</td>
+            </tr>
+            <tr>
+                <td>Deposit</td>
+                <td>{{ acct.deposit }}</td>
+            </tr>
+            <tr>
+                <td>Default Discount</td>
+                <td>{{ acct.default_discount }}</td>
+            </tr>
+            <tr>
+                <td>Account Status</td>
+                <td>{{ acct.account_status }}</td>
+            </tr>
+            <tr>
+                <td>Status Date</td>
+                <td>{{ acct.status_date }}</td>
+            </tr>
+        </table>
+        {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
