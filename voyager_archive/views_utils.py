@@ -38,7 +38,8 @@ def get_marc_fields(marc_text: str) -> list:
             tmp_rec_dict["data"] = field.data
 
         if hasattr(field, "indicator1"):
-            tmp_rec_dict["indicators"] = f"{field.indicator1} {field.indicator2}"
+            tmp_rec_dict["indicator1"] = str.strip(field.indicator1)
+            tmp_rec_dict["indicator2"] = str.strip(field.indicator2)
 
         try:
             subfield_dict = {}
