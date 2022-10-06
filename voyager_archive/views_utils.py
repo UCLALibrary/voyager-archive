@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404
 from pymarc import Record
 from django.db.models import QuerySet
 from .models import AuthRecord, BibRecord, MfhdRecord, ItemView, VendorView, VendorAccountView
