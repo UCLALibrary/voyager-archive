@@ -9,7 +9,7 @@
     <br>
     <button type="submit">Search</button>
 </form>
-<hr/>
+<hr>
 
 
 <div class="row">
@@ -113,7 +113,9 @@
                 <td>{{ acct.default_po_type }}</td>
             </tr>
         </table>
-        <br>
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
         {% endfor %}
         {% endif %}
     </div>
