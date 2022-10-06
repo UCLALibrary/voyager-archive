@@ -1,6 +1,6 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from pymarc import Record
-from .models import AuthRecord, BibRecord, MfhdRecord, ItemView
+from .models import AuthRecord, BibRecord, MfhdRecord, ItemView, VendorView, VendorAccountView
 
 
 def get_auth_record(auth_id: int) -> list:
@@ -29,3 +29,8 @@ def get_item(item_barcode: str) -> ItemView:
     item = get_object_or_404(ItemView, item_barcode=item_barcode)
 
     return item
+
+def get_vendor(vendor_code: str) -> VendorView:
+    vendor = get_object_or_404(VendorView, vendor_code=vendor_code)
+
+    return vendor

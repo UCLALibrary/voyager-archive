@@ -21,6 +21,8 @@ def search(request: HttpRequest) -> None:
 
             marc_record = None
             item = None
+            vendor = None
+            vendor_acct_list = None
             if search_type == 'AUTH_ID':
                 marc_record = get_auth_record(search_term)
             elif search_type == 'BIB_ID':
@@ -29,6 +31,9 @@ def search(request: HttpRequest) -> None:
                 marc_record = get_mfhd_record(search_term)
             elif search_type == 'ITEM_BARCODE':
                 item = get_item(search_term)
+            elif search_type == 'VENDOR_CODE':
+                vendor = get_vendor(search_term)
+                #vendor_acct_list = get_vendor_accts(vendor.vendor_id)
 
             if marc_record:
                 context = {
@@ -45,6 +50,15 @@ def search(request: HttpRequest) -> None:
                 }
 
                 return render(request, 'voyager_archive/item_display.html', context)
+            
+            elif vendor:
+                context = {
+                    'form': form,
+                    'vendor': vendor#,
+                    #'vendor_acct_list': vendor_acct_list
+                }
+
+                return render(request, 'voyager_archive/vendor_display.html', context)
     else:
         form = VoyArchiveForm()
         return render(request, 'voyager_archive/search.html', {'form': form})

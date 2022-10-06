@@ -1,0 +1,82 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+<form name="search_archive" id="search_archive" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <br>
+    <button type="submit">Search</button>
+</form>
+<hr/>
+
+
+<div class="row">
+    <div class="column">
+        <h1>Vendor Information</h1>
+        <table class="data-display">
+            <tr>
+                <td>Vendor Code</td>
+                <td>{{ vendor.vendor_code }}</td>
+            </tr>
+            <tr>
+                <td>Vendor Name</td>
+                <td>{{ vendor.vendor_name }}</td>
+            </tr>
+            <tr>
+                <td>Vendor ID</td>
+                <td>{{ vendor.vendor_id }}</td>
+            </tr>
+            <tr>
+                <td>Vendor Type</td>
+                <td>{{ vendor.vendor_type }}</td>
+            </tr>
+            <tr>
+                <td>Institution ID</td>
+                <td>{{ vendor.institution_id }}</td>
+            </tr>
+            <tr>
+                <td>Federal Tax ID</td>
+                <td>{{ vendor.federal_tax_id }}</td>
+            </tr>
+            <tr>
+                <td>Vendor Note</td>
+                <td>{{ vendor.vendor_note }}</td>
+            </tr>
+            <tr>
+                <td>Default Currency</td>
+                <td>{{ vendor.default_currency }}</td>
+            </tr>
+            <tr>
+                <td>Claim Interval</td>
+                <td>{{ vendor.claim_interval }}</td>
+            </tr>
+            <tr>
+                <td>Claim Count</td>
+                <td>{{ vendor.claim_count }}</td>
+            </tr>
+            <tr>
+                <td>Cancel Interval</td>
+                <td>{{ vendor.cancel_interval }}</td>
+            </tr>
+            <tr>
+                <td>Creation Date</td>
+                <td>{{ vendor.create_date }}</td>
+            </tr>
+            <tr>
+                <td>Creation Operator ID</td>
+                <td>{{ vendor.create_operator_id }}</td>
+            </tr>
+            <tr>
+                <td>Modification Date</td>
+                <td>{{ vendor.modify_date }}</td>
+            </tr>
+            <tr>
+                <td>Modification Operator ID</td>
+                <td>{{ vendor.modify_operator_id }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
