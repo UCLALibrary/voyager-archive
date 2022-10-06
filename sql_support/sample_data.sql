@@ -421,3 +421,27 @@ VE	Vendor
 \.
 
 COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY vendor (vendor_id,vendor_type,normal_vendor_type,vendor_code,normal_vendor_code,vendor_name,normal_vendor_name,federal_tax_id,institution_id,default_currency,claim_interval,claim_count,cancel_interval,ship_via,create_date,create_opid,update_date,update_opid) FROM STDIN;
+3764	VE	VE	LQZ	LQZ	Library of Congress Cataloging Distribution Service	LIBRARY OF CONGRESS CATALOGING DISTRIBUTION SERVICE	\N	006039003	\N	0	0	0	\N	2004-06-04 11:33:09	CONVERSION	2021-05-21 11:14:52	rrivero
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY vendor_account (account_id,vendor_id,account_number,account_name,default_po_type,deposit,default_discount,account_status,status_date) FROM STDIN;
+1	3764	552406-010	YRL Serials	5	\N	0	0	2004-07-15 13:47:24
+\.
+
+COMMIT;
