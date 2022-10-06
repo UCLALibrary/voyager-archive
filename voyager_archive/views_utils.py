@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
 from pymarc import Record
+from django.db.models import QuerySet
 from .models import AuthRecord, BibRecord, MfhdRecord, ItemView, VendorView, VendorAccountView
 
 
@@ -35,7 +36,7 @@ def get_vendor(vendor_code: str) -> VendorView:
 
     return vendor
 
-def get_vendor_accts(vendor_id: int):
+def get_vendor_accts(vendor_id: int) -> QuerySet:
     vendor_accts = VendorAccountView.objects.filter(vendor_id=vendor_id)
 
     return vendor_accts

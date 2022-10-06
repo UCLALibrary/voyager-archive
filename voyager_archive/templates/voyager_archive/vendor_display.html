@@ -89,42 +89,31 @@
         {% for acct in vendor_accts %}
         <table class="data-display">
             <tr>
-                <td>Vendor ID</td>
-                <td>{{ acct.vendor_id }}</td>
-            </tr>
-            <tr>
-                <td>Account ID</td>
-                <td>{{ acct.account_id }}</td>
+                <td>Account Name</td>
+                <td>{{ acct.account_name }}</td>
             </tr>
             <tr>
                 <td>Account Number</td>
                 <td>{{ acct.account_number }}</td>
             </tr>
             <tr>
-                <td>Account Name</td>
-                <td>{{ acct.account_name }}</td>
+                <td>Vendor Account ID</td>
+                <td>{{ acct.vendor_account_id }}</td>
             </tr>
             <tr>
-                <td>Default PO Type</td>
-                <td>{{ acct.default_po_type }}</td>
+                <td>Vendor ID</td>
+                <td>{{ acct.vendor_id }}</td>
             </tr>
             <tr>
                 <td>Deposit</td>
                 <td>{{ acct.deposit }}</td>
             </tr>
             <tr>
-                <td>Default Discount</td>
-                <td>{{ acct.default_discount }}</td>
-            </tr>
-            <tr>
-                <td>Account Status</td>
-                <td>{{ acct.account_status }}</td>
-            </tr>
-            <tr>
-                <td>Status Date</td>
-                <td>{{ acct.status_date }}</td>
+                <td>Default PO Type</td>
+                <td>{{ acct.default_po_type }}</td>
             </tr>
         </table>
+        <br>
         {% endfor %}
         {% endif %}
     </div>
