@@ -3,25 +3,25 @@ from pymarc import Record
 from .models import AuthRecord, BibRecord, MfhdRecord, ItemView
 
 
-def get_auth_record(auth_id: int) -> list:
+def get_auth_record(auth_id: int) -> dict:
     marc_text = get_object_or_404(AuthRecord, auth_id=auth_id).auth_record
 
     return get_marc_fields(marc_text)
 
 
-def get_bib_record(bib_id: int) -> list:
+def get_bib_record(bib_id: int) -> dict:
     marc_text = get_object_or_404(BibRecord, bib_id=bib_id).bib_record
 
     return get_marc_fields(marc_text)
 
 
-def get_mfhd_record(mfhd_id: int) -> list:
+def get_mfhd_record(mfhd_id: int) -> dict:
     marc_text = get_object_or_404(MfhdRecord, mfhd_id=mfhd_id).mfhd_record
 
     return get_marc_fields(marc_text)
 
 
-def get_marc_fields(marc_text: str) -> list:
+def get_marc_fields(marc_text: str) -> dict:
     byte_obj = marc_text.encode("utf-8")
     marc_record = Record(data=byte_obj)
     marc_fields = marc_record.get_fields()
@@ -38,8 +38,8 @@ def get_marc_fields(marc_text: str) -> list:
             tmp_rec_dict["data"] = field.data
 
         if hasattr(field, "indicator1"):
-            tmp_rec_dict["indicator1"] = str.strip(field.indicator1)
-            tmp_rec_dict["indicator2"] = str.strip(field.indicator2)
+            tmp_rec_dict["indicator1"] = field.indicator1.replace(" ", "_")
+            tmp_rec_dict["indicator2"] = field.indicator2.replace(" ", "_")
 
         try:
             subfield_dict = {}
