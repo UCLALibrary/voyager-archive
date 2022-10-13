@@ -9,134 +9,134 @@
     <br>
     <button type="submit">Search</button>
 </form>
-<hr/>
+<hr>
 
 
 <div class="row">
     <div class="column">
-        <h1>Basic Information</h1>
+        <h2>Basic Information</h2>
         <table class="data-display">
             <tr>
-                <td>Item Barcode</td>
+                <td class="label">Item Barcode</td>
                 <td>{{ item.item_barcode }}</td>
             </tr>
             <tr>
-                <td>Item ID</td>
+                <td class="label">Item ID</td>
                 <td>{{ item.item_id }}</td>
             </tr>
             <tr>
-                <td>MFHD ID</td>
+                <td class="label">MFHD ID</td>
                 <td>{{ item.mfhd_id }}</td>
             </tr>
             <tr>
-                <td>Item Type</td>
+                <td class="label">Item Type</td>
                 <td>{{ item.item_type }}</td>
             </tr>
             <tr>
-                <td>Temporary Item Type</td>
+                <td class="label">Temporary Item Type</td>
                 <td>{{ item.temp_item_type }}</td>
             </tr>
             <tr>
-                <td>Enumeration</td>
+                <td class="label">Enumeration</td>
                 <td>{{ item.item_enum }}</td>
             </tr>
             <tr>
-                <td>Chronology</td>
+                <td class="label">Chronology</td>
                 <td>{{ item.chron }}</td>
             </tr>
             <tr>
-                <td>Year</td>
+                <td class="label">Year</td>
                 <td>{{ item.year }}</td>
             </tr>
             <tr>
-                <td>Caption</td>
+                <td class="label">Caption</td>
                 <td>{{ item.caption }}</td>
             </tr>
             <tr>
-                <td>Freetext</td>
+                <td class="label">Freetext</td>
                 <td>{{ item.freetext }}</td>
             </tr>
             <tr>
-                <td>Copy Number</td>
+                <td class="label">Copy Number</td>
                 <td>{{ item.copy_number }}</td>
             </tr>
             <tr>
-                <td>Pieces</td>
+                <td class="label">Pieces</td>
                 <td>{{ item.pieces }}</td>
             </tr>
             <tr>
-                <td>Price</td>
+                <td class="label">Price</td>
                 <td>{{ item.price }}</td>
             </tr>
             <tr>
-                <td>Item Sequence Number</td>
+                <td class="label">Item Sequence Number</td>
                 <td>{{ item.item_sequence_number }}</td>
             </tr>
 
         </table>
     </div>
     <div class="column">
-        <h1>Location and Circulation Information</h1>
+        <h2>Location and Circulation Information</h2>
         <table class="data-display">
             <tr>
-                <td>Permanent Location</td>
+                <td class="label">Permanent Location</td>
                 <td>{{ item.perm_location }}</td>
             </tr>
             <tr>
-                <td>Temporary Location</td>
+                <td class="label">Temporary Location</td>
                 <td>{{ item.temp_location }}</td>
             </tr>
             <tr>
-                <td>Historical Charges</td>
+                <td class="label">Historical Charges</td>
                 <td>{{ item.historical_charges }}</td>
             </tr>
             <tr>
-                <td>Historical Browses</td>
+                <td class="label">Historical Browses</td>
                 <td>{{ item.historical_browses }}</td>
             </tr>
             <tr>
-                <td>Holds Placed</td>
+                <td class="label">Holds Placed</td>
                 <td>{{ item.holds_placed }}</td>
             </tr>
             <tr>
-                <td>Recalls Placed</td>
+                <td class="label">Recalls Placed</td>
                 <td>{{ item.recalls_placed }}</td>
             </tr>
             <tr>
-                <td>On Reserve</td>
+                <td class="label">On Reserve</td>
                 <td>{{ item.on_reserve }}</td>
             </tr>
             <tr>
-                <td>Reserve Charges</td>
+                <td class="label">Reserve Charges</td>
                 <td>{{ item.reserve_charges }}</td>
             </tr>
         </table>
     </div>
     <div class="column">
-        <h1>Metadata Information</h1>
+        <h2>Metadata Information</h2>
         <table class="data-display">
             <tr>
-                <td>Creator ID</td>
+                <td class="label">Creator ID</td>
                 <td>{{ item.create_operator_id }}</td>
             </tr>
             <tr>
-                <td>Creation Date</td>
+                <td class="label">Creation Date</td>
                 <td>{{ item.create_date }}</td>
             </tr>
             <tr>
-                <td>Creation Location</td>
+                <td class="label">Creation Location</td>
                 <td>{{ item.create_location }}</td>
             </tr>
             <tr>
-                <td>Modifier ID</td>
+                <td class="label">Modifier ID</td>
                 <td>{{ item.modify_operator_id }}</td>
             </tr>
             <tr>
-                <td>Modification Date</td>
+                <td class="label">Modification Date</td>
                 <td>{{ item.modify_date }}</td>
             </tr>
             <tr>
-                <td>Modification Location</td>
+                <td class="label">Modification Location</td>
                 <td>{{ item.modify_location }}</td>
             </tr>
         </table>
