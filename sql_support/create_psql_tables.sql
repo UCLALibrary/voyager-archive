@@ -1259,3 +1259,10 @@ CREATE TABLE mfhd_record (
 ) ;
 
 
+/*
+* Table for minimal bib data needed for po / invoice lines
+*/
+CREATE TABLE bib_title (
+	bib_id numeric(38) primary key,
+	title text
+) ;
