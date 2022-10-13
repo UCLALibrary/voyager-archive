@@ -1,0 +1,131 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+<form name="search_archive" id="search_archive" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <br>
+    <button type="submit">Search</button>
+</form>
+<hr>
+
+<h2>Purchase Order Header</h2>
+<div class="row">
+    <div class="column">
+        <table class="data-display">
+            <tr>
+                <td class="label">PO Number</td>
+                <td>{{ po_header.po_number }}</td>
+            </tr>
+            <tr>
+                <td class="label">Vendor</td>
+                <td>
+                    {{ po_header.vendor_code }}
+                    {% if po_header.vendor_account_number %}(account {{po_header.vendor_account_number }}){% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">PO Type</td>
+                <td>{{ po_header.po_type }}</td>
+            </tr>
+            <tr>
+                <td class="label">PO Status</td>
+                <td>{{ po_header.po_status}} ({{ po_header.status_date }})</td>
+            </tr>
+            <tr>
+                <td class="label">Approved</td>
+                <td>{{ po_header.approve_date }} by {{ po_header.approve_operator_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Created</td>
+                <td>{{ po_header.create_date }} by {{ po_header.create_operator_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Modified</td>
+                <td>{{ po_header.modify_date }} by {{ po_header.modify_operator_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Note</td>
+                <td>{{ po_header.note }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="column">
+        <table class="data-display">
+            <tr>
+                <td class="label">Order Location</td>
+                <td>{{ po_header.order_location }}</td>
+            </tr>
+            <tr>
+                <td class="label">Shipping Location</td>
+                <td>{{ po_header.ship_location }}</td>
+            </tr>
+            <tr>
+                <td class="label">Billing Location</td>
+                <td>{{ po_header.bill_location }}</td>
+            </tr>
+            <tr>
+                <td class="label">Original Currency</td>
+                <td>
+                    {% if po_header.currency_code == "USD" %}
+                    USD
+                    {% else %}
+                    {{ po_header.currency_code }} (1 USD = {{ po_header.conversion_rate|floatformat:2 }} {{ po_header.currency_code }})
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Line Item Subtotal</td>
+                <td>USD ${{ po_header.line_item_subtotal|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Adjustments Subtotal</td>
+                <td>USD ${{ po_header.adjustments_subtotal|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Total</td>
+                <td>USD ${{ po_header.total|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Line Items</td>
+                <td>{{ po_header.line_item_count }}</td>
+            </tr>
+        </table>        
+    </div>
+</div>
+
+<div class="row">
+    <div class="column">
+        {% if po_lines %}
+        <h2>Purchase Order Lines</h2>
+        {% for line in po_lines %}
+        <table class="data-display">
+            <tr>
+                <th>Line #</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Piece Identifier</th>
+                <th>Amount</th>
+            </tr>
+            <tr>
+                <td class="label">#{{ line.line_item_number }}</td>
+                <td>{{ line.bib_id }} {{ line.title }}</td>
+                <td>{{ line.line_item_status }} / {{ line.inv_line_status }} ({{ line.status_date }})</td>
+                <td>{% if line.piece_identifer %}{{ line.piece_identifier }}{% endif %}</td>
+                <td>USD ${{ line.usd_amount|floatformat:2 }}</td>
+            </tr>
+            {% comment %}
+            <tr>
+                <td class="label"></td>
+                <td></td>
+            </tr>
+            {% endcomment %}
+        </table>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -203,7 +203,8 @@ select
 ,	va.account_number as vendor_acccount_number
 ,	po.po_number
 ,	po.currency_code
-,	po.conversion_rate
+-- conversion_rate needs to be scaled by 100,000
+,	po.conversion_rate / 100000 as conversion_rate
 ,	pot.po_type_desc as po_type
 ,	pos.po_status_desc as po_status
 ,	po.po_status_date as status_date
@@ -247,6 +248,7 @@ select
 ,	li.bib_id
 ,	lics.copy_id
 ,	lics.mfhd_id
+,	bt.title
 ,	l.location_code
 ,	po.po_number
 ,	lit.line_item_type_desc as line_item_type
@@ -286,6 +288,7 @@ inner join line_item_funds lif on lics.copy_id = lif.copy_id
 inner join fund f on lif.ledger_id = f.ledger_id and lif.fund_id = f.fund_id
 inner join ledger lg on f.ledger_id = lg.ledger_id
 inner join location l on lics.location_id = l.location_id
+inner join bib_title bt on li.bib_id = bt.bib_id
 left outer join line_item_notes lin on li.line_item_id = lin.line_item_id
 ;
 

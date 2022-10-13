@@ -127,6 +127,8 @@ SET synchronous_commit TO off;
 
 COPY ledger (ledger_id,fiscal_year_id,acq_policy_id,ledger_name,normal_ledger_name,overcommit,overcommit_warn,overcommit_percent,commit_freeze,undercommit_percent,overexpend,overexpend_warn,overexpend_percent,expend_freeze,underexpend_percent,create_date,create_opid,update_date,update_opid,rule_id,new_ledger_name,normal_new_ledger_name,new_ledger_id) FROM STDIN;
 326	17	1	EAST ASIAN 20-21	EAST ASIAN 20 21	N	0	0	\N	0	N	0	0	\N	0	2020-07-01 09:12:50	<R>	2020-07-01 09:12:50	\N	32	EAST ASIAN 21-22	EAST ASIAN 21 22	344
+336	17	1	MUSIC 20-21	MUSIC 20 21	N	0	0	\N	0	N	0	0	\N	0	2020-07-01 09:12:53	<R>	2020-07-01 09:12:53	\N	32	MUSIC 21-22	MUSIC 21 22	354
+355	18	1	IS 21-22	IS 21 22	N	0	0	\N	0	N	0	0	\N	0	2021-06-05 06:00:08	<R>	2021-06-05 06:00:08	\N	0	\N	\N	0
 \.
 
 COMMIT;
@@ -143,6 +145,8 @@ COPY fund (fund_id,ledger_id,parent_fund,fund_name,normal_fund_name,fund_code,no
 3777	290	3771	Japanese Mono Prt	JAPANESE MONO PRT	L3MPEAJA-2	L3MPEAJA 2	2	1	\N	\N	4 603800 LM 19900 05 9200 JAPAN	N	0	0	0	0	0	0	7801575	N	0	0	\N	0	N	0	0	\N	0	2018-07-06 11:43:45	<R>	2018-07-06 11:43:45	\N
 3777	326	3771	Japanese Mono Prt	JAPANESE MONO PRT	L3MPEAJA-2	L3MPEAJA 2	2	1	\N	\N	4 603800 LM 19900 05 9200 JAPAN	N	0	0	0	0	0	0	9134942	N	0	0	\N	0	N	0	0	\N	0	2020-07-01 09:12:50	<R>	2020-07-01 09:12:50	\N
 3777	308	3771	Japanese Mono Prt	JAPANESE MONO PRT	L3MPEAJA-2	L3MPEAJA 2	2	1	\N	\N	4 603800 LM 19900 05 9200 JAPAN	N	0	0	0	0	0	0	8458688	N	0	0	\N	0	N	0	0	\N	0	2019-07-01 09:11:24	<R>	2019-07-01 09:11:24	\N
+6758	355	6757	Western European Mono	WESTERN EUROPEAN MONO	1IS117	1IS117	1	1	\N	\N	4 606800 LM 18082 05 9200	N	2662600	0	0	0	450986	0	0	Y	115	115	\N	0	Y	115	115	\N	0	2021-06-05 06:00:08	<R>	2021-06-08 16:19:23	asallen
+4717	336	4703	Music Mono Scores	MUSIC MONO SCORES	L3MSMUMU-2	L3MSMUMU 2	2	1	\N	\N	4 603520 LM 19900 05 9200	N	0	0	0	0	0	0	1678948	N	0	0	\N	0	N	0	0	\N	0	2020-07-01 09:12:53	<R>	2020-07-01 09:12:53	\N
 \.
 
 COMMIT;
@@ -155,6 +159,7 @@ SET synchronous_commit TO off;
 
 COPY vendor (vendor_id,vendor_type,normal_vendor_type,vendor_code,normal_vendor_code,vendor_name,normal_vendor_name,federal_tax_id,institution_id,default_currency,claim_interval,claim_count,cancel_interval,ship_via,create_date,create_opid,update_date,update_opid) FROM STDIN;
 6718	VE	VE	YAGI	YAGI	YAGI Book Store Ltd.	YAGI BOOK STORE LTD	\N	188657001	\N	0	0	0	\N	2004-12-20 14:50:31	rsiao	2017-08-28 12:02:30	ncasner
+2264	VE	VE	HAR	HAR	Harrassowitz	HARRASSOWITZ	\N	006800004	\N	0	0	0	\N	2004-06-04 11:33:09	CONVERSION	2017-12-15 09:43:20	ncasner
 \.
 
 COMMIT;
@@ -317,6 +322,11 @@ SET synchronous_commit TO off;
 
 COPY location (location_id,location_code,location_name,location_display_name,location_spine_label,location_opac,suppress_in_opac,library_id,mfhd_count) FROM STDIN;
 146	ea**	EA Stacks**	East Asian Library Stacks Oversize**	E. Asian;Lib.	Y	N	1	18
+147	eaacq	*East Asian Acquisitions	East Asian Library Acquisitions Department	\N	Y	N	1	1208
+292	muacq	*Music Acq Dept	Music Library Acquisitions Department	\N	Y	N	1	107
+575	musmon	+Music Monographs	\N	\N	\N	Y	1	0
+288	mu	Music Stacks	Music Library	Music Lib.	Y	N	1	83383
+460	yr	YRL Stacks	YRL	\N	Y	N	1	1516861
 \.
 
 COMMIT;
@@ -442,6 +452,52 @@ SET synchronous_commit TO off;
 
 COPY vendor_account (account_id,vendor_id,account_number,account_name,default_po_type,deposit,default_discount,account_status,status_date) FROM STDIN;
 1	3764	552406-010	YRL Serials	5	\N	0	0	2004-07-15 13:47:24
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY line_item_type (line_item_type,line_item_type_desc) FROM STDIN;
+0	Single-part
+1	Subscription
+2	Membership
+3	Standing Order
+4	Blanket Order
+5	Multi-part
+6	Approval
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY line_item_funds (copy_id,split_fund_seq,ledger_id,fund_id,percentage,prepay_percentage,amount,prepay,allocation_method) FROM STDIN;
+1159093	1	326	3777	100000000	100000000	0	0	P
+128592	1	355	6758	100000000	0	0	0	P
+1185415	1	336	4717	100000000	100000000	4400	0	P
+\.
+
+COMMIT;
+
+BEGIN;
+
+SET client_encoding TO 'UTF8';
+SET synchronous_commit TO off;
+
+
+COPY bib_title (bib_id,title) FROM STDIN;
+9411434	Edo hanpon shūyō /
+4507	The complete works of Voltaire /
+9467582	Brandnä va /
 \.
 
 COMMIT;

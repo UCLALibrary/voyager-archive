@@ -36,3 +36,7 @@
   .delimiter {
     color: blue
   }
+
+  .label {
+    font-weight: bold;
+  }
