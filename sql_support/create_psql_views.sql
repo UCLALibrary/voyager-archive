@@ -292,3 +292,46 @@ inner join bib_title bt on li.bib_id = bt.bib_id
 left outer join line_item_notes lin on li.line_item_id = lin.line_item_id
 ;
 
+
+/*	View of authority records.
+	Use for consistency with bib and holdings views.
+	One row per authority record.
+*/
+drop view if exists auth_record_view;
+create or replace view auth_record_view as
+select
+	auth_id
+,	auth_record
+from auth_record
+;
+
+
+/*	View of bibliographic records.
+	Adds suppression info.
+	One row per bibliographic record.
+*/
+drop view if exists bib_record_view;
+create or replace view bib_record_view as
+select
+	br.bib_id
+,	br.bib_record
+,	bm.suppress_in_opac as suppressed
+from bib_record br
+inner join bib_master bm on br.bib_id = bm.bib_id
+;
+
+
+/*	View of holdings (mfhd) records.
+	Adds suppression info.
+	One row per holdings record.
+*/
+drop view if exists mfhd_record_view;
+create or replace view mfhd_record_view as
+select
+	mr.mfhd_id
+,	mr.mfhd_record
+,	mm.suppress_in_opac as suppressed
+from mfhd_record mr
+inner join mfhd_master mm on mr.mfhd_id = mm.mfhd_id
+;
+

@@ -2627,3 +2627,41 @@ class PoLineItemView(models.Model):
     class Meta:
         managed = False  # Created from a view. Don't remove.
         db_table = "po_line_item_view"
+
+
+class AuthRecordView(models.Model):
+    auth_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    auth_record = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = "auth_record_view"
+
+
+class BibRecordView(models.Model):
+    bib_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    bib_record = models.TextField(blank=True, null=True)
+    suppressed = models.CharField(max_length=1, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = "bib_record_view"
+
+
+class MfhdRecordView(models.Model):
+    mfhd_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    mfhd_record = models.TextField(blank=True, null=True)
+    suppressed = models.CharField(max_length=1, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = "mfhd_record_view"
+
+
+class BibTitle(models.Model):
+    bib_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    title = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = "bib_title"
