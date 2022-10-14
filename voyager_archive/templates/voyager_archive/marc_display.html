@@ -13,14 +13,20 @@
 
 <div class="row">
     <div class="column">
-        <h4>Record Leader: {{ marc_record.leader }}</h4>
         <table class="data-display">
+            {% comment %}
+            Leader is special; display before regular fields.
+            {% endcomment %}
+            <tr>
+                <td>LDR</td>
+                <td></td>
+                <td>{{ marc_record.leader }}</td>
+            </tr>
             {% for field in marc_record.fields %}
             <tr>
                 <td>{{ field.tag }}</td>
                 <td><span class='indicators'>
-                    {{ field.indicator1 }}
-                    {{ field.indicator2 }}
+                    {{ field.indicator1 }}&nbsp;{{ field.indicator2 }}
                     </span>
                 </td>
                 <td>
