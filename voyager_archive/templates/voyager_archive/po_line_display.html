@@ -26,10 +26,6 @@
                 <td>{{ line.po_id }}</td>
             </tr>
             <tr>
-                <td class="label">Vendor ID</td>
-                <td>{{ line.vendor_id }}</td>
-            </tr>
-            <tr>
                 <td class="label">Bib ID</td>
                 <td>{{ line.bib_id }}</td>
             </tr>
@@ -79,14 +75,14 @@
             </tr>
             <tr>
                 <td class="label">Unit Price</td>
-                <td>{{ line.unit_price }}</td>
+                <td>{{ line.unit_price|floatformat:2 }}</td>
             </tr>
             <tr>
                 <td class="label">Line Price</td>
-                <td>{{ line.line_price }}</td>
+                <td>{{ line.line_price|floatformat:2 }}</td>
             </tr>
             <tr>
-                <td class="label">Split Fund Seq #</td>
+                <td class="label">Split Fund Sequence #</td>
                 <td>{{ line.split_fund_seq }}</td>
             </tr>
             <tr>
@@ -99,7 +95,7 @@
             </tr>
             <tr>
                 <td class="label">USD Amount</td>
-                <td>{{ line.usd_amount }}</td>
+                <td>{{ line.usd_amount|floatformat:2 }}</td>
             </tr>
             <tr>
                 <td class="label">Quantity</td>
