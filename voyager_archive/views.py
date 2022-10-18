@@ -58,5 +58,5 @@ def search(request: HttpRequest) -> None:
 def po_line_display(request: HttpRequest, po_line_item_id: int) -> None:
     po_lines = get_po_lines_by_line_id(po_line_item_id)
     ordered_po_lines = po_lines.order_by("split_fund_seq")
-    context = {"po_lines": ordered_po_lines, "form": VoyArchiveForm()}
+    context = {"po_lines": ordered_po_lines}
     return render(request, "voyager_archive/po_line_display.html", context)
