@@ -86,3 +86,8 @@ def get_po_header(po_number: str) -> PoHeaderView:
 def get_po_lines(po_id: int) -> QuerySet:
     po_lines = PoLineItemView.objects.filter(po_id=po_id)
     return po_lines
+
+
+def get_po_lines_by_line_id(line_item_id: int) -> QuerySet:
+    po_lines = PoLineItemView.objects.filter(line_item_id=line_item_id)
+    return po_lines

@@ -72,7 +72,8 @@
                     {% if po_header.currency_code == "USD" %}
                     USD
                     {% else %}
-                    {{ po_header.currency_code }} (1 USD = {{ po_header.conversion_rate|floatformat:2 }} {{ po_header.currency_code }})
+                    {{ po_header.currency_code }} (1 USD = {{ po_header.conversion_rate|floatformat:2 }} {{
+                    po_header.currency_code }})
                     {% endif %}
                 </td>
             </tr>
@@ -92,7 +93,7 @@
                 <td class="label">Line Items</td>
                 <td>{{ po_header.line_item_count }}</td>
             </tr>
-        </table>        
+        </table>
     </div>
 </div>
 
@@ -103,14 +104,15 @@
         {% for line in po_lines %}
         <table class="data-display">
             <tr>
-                <th>Line #</th>
+                <th>Line #</a></th>
                 <th>Title</th>
                 <th>Status</th>
                 <th>Piece Identifier</th>
                 <th>Amount</th>
             </tr>
             <tr>
-                <td class="label">#{{ line.line_item_number }}</td>
+                <td class="label"><a href="{% url 'po_line_display' line.line_item_id %}">
+                        #{{ line.line_item_number }}</a></td>
                 <td>{{ line.bib_id }} {{ line.title }}</td>
                 <td>{{ line.line_item_status }} / {{ line.inv_line_status }} ({{ line.status_date }})</td>
                 <td>{% if line.piece_identifer %}{{ line.piece_identifier }}{% endif %}</td>
