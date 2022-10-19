@@ -118,7 +118,7 @@
             <tr>
                 <td>{{ line.status }}</td>
                 <td>{{ line.bib_id }} {{ line.title }}</td>
-                <td>{% if line.piece_identifer %}{{ line.piece_identifier }}{% endif %}</td>
+                <td>{{ line.piece_identifier }}</td>
                 <td>{{ line.ledger_name }} / {{ line.fund_name }}</td>
                 <td>USD ${{ line.usd_amount|floatformat:2 }}</td>
             </tr>
