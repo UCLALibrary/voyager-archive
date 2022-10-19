@@ -2489,6 +2489,9 @@ class InvoiceLineView(models.Model):
     unit_price = models.DecimalField(
         max_digits=65535, decimal_places=65535, blank=True, null=True
     )
+    bib_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    title = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=25, blank=True, null=True)
     line_price = models.DecimalField(
         max_digits=65535, decimal_places=65535, blank=True, null=True
     )

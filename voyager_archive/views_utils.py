@@ -4,6 +4,9 @@ from django.db.models import QuerySet
 from .models import (
     AuthRecordView,
     BibRecordView,
+    InvoiceAdjustmentView,
+    InvoiceHeaderView,
+    InvoiceLineView,
     MfhdRecordView,
     ItemView,
     PoHeaderView,
@@ -79,10 +82,29 @@ def get_vendor_accts(vendor_id: int) -> QuerySet:
 
 
 def get_po_header(po_number: str) -> PoHeaderView:
-    purchase_order = get_object_or_404(PoHeaderView, po_number=po_number)
-    return purchase_order
+    po_header = get_object_or_404(PoHeaderView, po_number=po_number)
+    return po_header
 
 
 def get_po_lines(po_id: int) -> QuerySet:
     po_lines = PoLineItemView.objects.filter(po_id=po_id)
     return po_lines
+
+
+def get_inv_header(inv_number: str) -> InvoiceHeaderView:
+    inv_header = get_object_or_404(InvoiceHeaderView, invoice_number=inv_number)
+    return inv_header
+
+
+def get_inv_lines(invoice_id: int) -> QuerySet:
+    inv_lines = InvoiceLineView.objects.filter(invoice_id=invoice_id).order_by(
+        "inv_line_item_id"
+    )
+    return inv_lines
+
+
+def get_inv_adjustments(invoice_id: int) -> QuerySet:
+    inv_adjustments = InvoiceAdjustmentView.objects.filter(
+        invoice_id=invoice_id
+    ).order_by("payment_id")
+    return inv_adjustments
