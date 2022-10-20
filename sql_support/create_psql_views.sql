@@ -309,6 +309,7 @@ create or replace view auth_record_view as
 select
 	auth_id
 ,	auth_record
+,	'N' as suppressed
 from auth_record
 ;
 
