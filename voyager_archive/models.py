@@ -2489,6 +2489,9 @@ class InvoiceLineView(models.Model):
     unit_price = models.DecimalField(
         max_digits=65535, decimal_places=65535, blank=True, null=True
     )
+    bib_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    title = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=25, blank=True, null=True)
     line_price = models.DecimalField(
         max_digits=65535, decimal_places=65535, blank=True, null=True
     )
@@ -2629,18 +2632,34 @@ class PoLineItemView(models.Model):
         db_table = "po_line_item_view"
 
 
-class AuthRecordView(models.Model):
-    auth_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
-    auth_record = models.TextField(blank=True, null=True)
+class MARCRecordView(models.Model):
+    marc_record_id = models.DecimalField(
+        primary_key=True, max_digits=38, decimal_places=0
+    )
+    marc_record = models.TextField(blank=True, null=True)
+    suppressed = models.CharField(max_length=1, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class AuthRecordView(MARCRecordView):
+    marc_record_id = models.DecimalField(
+        primary_key=True, max_digits=38, decimal_places=0, db_column="auth_id"
+    )
+    marc_record = models.TextField(blank=True, null=True, db_column="auth_record")
+    suppressed = models.CharField(max_length=1, blank=True, null=True)
 
     class Meta:
         managed = False  # Created from a view. Don't remove.
         db_table = "auth_record_view"
 
 
-class BibRecordView(models.Model):
-    bib_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
-    bib_record = models.TextField(blank=True, null=True)
+class BibRecordView(MARCRecordView):
+    marc_record_id = models.DecimalField(
+        primary_key=True, max_digits=38, decimal_places=0, db_column="bib_id"
+    )
+    marc_record = models.TextField(blank=True, null=True, db_column="bib_record")
     suppressed = models.CharField(max_length=1, blank=True, null=True)
 
     class Meta:
@@ -2648,9 +2667,11 @@ class BibRecordView(models.Model):
         db_table = "bib_record_view"
 
 
-class MfhdRecordView(models.Model):
-    mfhd_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
-    mfhd_record = models.TextField(blank=True, null=True)
+class MfhdRecordView(MARCRecordView):
+    marc_record_id = models.DecimalField(
+        primary_key=True, max_digits=38, decimal_places=0, db_column="mfhd_id"
+    )
+    marc_record = models.TextField(blank=True, null=True, db_column="mfhd_record")
     suppressed = models.CharField(max_length=1, blank=True, null=True)
 
     class Meta:

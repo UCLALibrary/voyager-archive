@@ -15,8 +15,14 @@
     <div class="column">
         <table class="data-display">
             {% comment %}
-            Leader is special; display before regular fields.
+            Leader and suppression info are special;
+            display before regular fields.
             {% endcomment %}
+            <tr>
+                <td>Suppressed</td>
+                <td></td>
+                <td>{{ marc_record.suppressed }}</td>
+            </tr>
             <tr>
                 <td>LDR</td>
                 <td></td>
