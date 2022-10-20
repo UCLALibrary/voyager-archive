@@ -10,6 +10,7 @@ from .models import (
     PoLineItemView,
     VendorView,
     VendorAccountView,
+    InvoiceHeaderView,
 )
 
 
