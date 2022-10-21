@@ -1,0 +1,173 @@
+{% extends 'voyager_archive/base.html' %}
+{% block content %}
+
+{% for line in po_lines %}
+<div class="row">
+    <div class="column">
+        <h2>Purchase Order Information</h2>
+        <table class="data-display">
+            <tr>
+                <td class="label">PO ID</td>
+                <td>{{ line.po_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">PO Number</td>
+                <td>{{ line.po_number }}</td>
+            </tr>
+            <tr>
+                <td class="label">Line Item ID</td>
+                <td>{{ line.line_item_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Line Item Number</td>
+                <td>{{ line.line_item_number }}</td>
+            </tr>
+            <tr>
+                <td class="label">Line Item Type</td>
+                <td>{{ line.line_item_type }}</td>
+            </tr>
+            <tr>
+                <td class="label">Line Item Status</td>
+                <td>{{ line.line_item_status }}</td>
+            </tr>
+            <tr>
+                <td class="label">Invoice Line Status</td>
+                <td>{{ line.inv_line_status }}</td>
+            </tr>
+            <tr>
+                <td class="label">Status Date</td>
+                <td>{{ line.status_date }}</td>
+            </tr>
+            <tr>
+                <td class="label">Piece Identifier</td>
+                <td>{{ line.piece_identifier }}</td>
+            </tr>
+        </table>
+        <h2>Metadata Information</h2>
+        <table class="data-display">
+            <tr>
+                <td class="label">Creation Date</td>
+                <td>{{ line.create_date }}</td>
+            </tr>
+            <tr>
+                <td class="label">Creation Operator ID</td>
+                <td>{{ line.create_operator_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Modification Date</td>
+                <td>{{ line.modify_date }}</td>
+            </tr>
+            <tr>
+                <td class="label">Modification Operator ID</td>
+                <td>{{ line.modify_operator_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Received Operator ID</td>
+                <td>{{ line.receive_operator_id }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="column">
+        <h2>Vendor Information</h2>
+        <table class="data-display">
+            <tr>
+                <td class="label">Vendor Title #</td>
+                <td>{{ line.vendor_title_num }}</td>
+            </tr>
+            <tr>
+                <td class="label">Vendor Ref Qual</td>
+                <td>{{ line.vendor_ref_qual }}</td>
+            </tr>
+            <tr>
+                <td class="label">Vendor Ref #</td>
+                <td>{{ line.vendor_ref_num}}</td>
+            </tr>
+        </table>
+        <h2>Item Information</h2>
+        <table class="data-display">
+            <tr>
+                <td class="label">Bib ID</td>
+                <td>{{ line.bib_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Copy ID</td>
+                <td>{{ line.copy_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">MFHD ID</td>
+                <td>{{ line.mfhd_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Title</td>
+                <td>{{ line.title }}</td>
+            </tr>
+            <tr>
+                <td class="label">Location Code</td>
+                <td>{{ line.location_code }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="column">
+        <h2>Fund and Price Information</h2>
+        <table class="data-display">
+            <tr>
+                <td class="label">Unit Price</td>
+                <td>{{ line.unit_price|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Line Price</td>
+                <td>{{ line.line_price|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Split Fund Sequence #</td>
+                <td>{{ line.split_fund_seq }}</td>
+            </tr>
+            <tr>
+                <td class="label">Percentage</td>
+                <td>{{ line.percentage }}</td>
+            </tr>
+            <tr>
+                <td class="label">Raw Amount</td>
+                <td>{{ line.raw_amount|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">USD Amount</td>
+                <td>{{ line.usd_amount|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Quantity</td>
+                <td>{{ line.quantity }}</td>
+            </tr>
+            <tr>
+                <td class="label">Ledger Name</td>
+                <td>{{ line.ledger_name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Fund Name</td>
+                <td>{{ line.fund_name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Fund Code</td>
+                <td>{{ line.fund_code }}</td>
+            </tr>
+            <tr>
+                <td class="label">FAU</td>
+                <td>{{ line.fau }}</td>
+            </tr>
+            <tr>
+                <td class="label">Note</td>
+                <td>{{ line.note }}</td>
+            </tr>
+            <tr>
+                <td class="label">Requestor</td>
+                <td>{{ line.requestor }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% if not forloop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

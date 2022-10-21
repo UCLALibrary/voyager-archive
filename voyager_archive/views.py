@@ -66,3 +66,9 @@ def search(request: HttpRequest) -> None:
     else:
         form = VoyArchiveForm()
         return render(request, "voyager_archive/search.html", {"form": form})
+
+
+def po_line_display(request: HttpRequest, po_line_item_id: int) -> None:
+    po_lines = get_po_lines_by_line_id(po_line_item_id)
+    context = {"po_lines": po_lines}
+    return render(request, "voyager_archive/po_line_display.html", context)
