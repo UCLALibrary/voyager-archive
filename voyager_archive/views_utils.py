@@ -90,7 +90,9 @@ def get_po_lines(po_id: int) -> QuerySet:
 
 
 def get_po_lines_by_line_id(line_item_id: int) -> QuerySet:
-    po_lines = PoLineItemView.objects.filter(line_item_id=line_item_id)
+    po_lines = PoLineItemView.objects.filter(line_item_id=line_item_id).order_by(
+        "split_fund_seq"
+    )
     return po_lines
 
 

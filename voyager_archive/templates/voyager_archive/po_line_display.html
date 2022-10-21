@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td class="label">Creation Operator ID</td>
-                <td>{{ line.create_operator_ID }}</td>
+                <td>{{ line.create_operator_id }}</td>
             </tr>
             <tr>
                 <td class="label">Modification Date</td>
@@ -63,7 +63,7 @@
             </tr>
             <tr>
                 <td class="label">Received Operator ID</td>
-                <td>{{ line.receive_operator_ID }}</td>
+                <td>{{ line.receive_operator_id }}</td>
             </tr>
         </table>
     </div>
@@ -80,7 +80,7 @@
             </tr>
             <tr>
                 <td class="label">Vendor Ref #</td>
-                <td>{{ line.vndor_ref_num}}</td>
+                <td>{{ line.vendor_ref_num}}</td>
             </tr>
         </table>
         <h2>Item Information</h2>
@@ -128,7 +128,7 @@
             </tr>
             <tr>
                 <td class="label">Raw Amount</td>
-                <td>{{ line.raw_amount }}</td>
+                <td>{{ line.raw_amount|floatformat:2 }}</td>
             </tr>
             <tr>
                 <td class="label">USD Amount</td>
