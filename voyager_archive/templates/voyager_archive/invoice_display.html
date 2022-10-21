@@ -1,0 +1,131 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+<form name="search_archive" id="search_archive" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <br>
+    <button type="submit">Search</button>
+</form>
+<hr>
+
+<h2>Invoice Header</h2>
+<div class="row">
+    <div class="column">
+        <table class="data-display">
+            <tr>
+                <td class="label">Invoice Number</td>
+                <td>{{ inv_header.invoice_number }}</td>
+            </tr>
+            <tr>
+                <td class="label">Vendor</td>
+                <td>
+                    {{ inv_header.vendor_code }}
+                    {% if inv_header.vendor_account_number %}(account {{inv_header.vendor_account_number }}){% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Voucher Number</td>
+                <td>{{ inv_header.voucher_number }}</td>
+            </tr>
+            <tr>
+                <td class="label">Status</td>
+                <td>{{ inv_header.status}} ({{ inv_header.status_date }})</td>
+            </tr>
+            <tr>
+                <td class="label">Created</td>
+                <td>{{ inv_header.create_date }} by {{ inv_header.create_operator_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Modified</td>
+                <td>{{ inv_header.modify_date }} by {{ inv_header.modify_operator_id }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="column">
+        <table class="data-display">
+            <tr>
+                <td class="label">Original Currency</td>
+                <td>
+                    {% if inv_header.currency_code == "USD" %}
+                    USD
+                    {% else %}
+                    {{ inv_header.currency_code }} (1 USD = {{ inv_header.conversion_rate|floatformat:2 }} {{ inv_header.currency_code }})
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Line Item Subtotal</td>
+                <td>USD ${{ inv_header.line_item_subtotal|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Adjustments Subtotal</td>
+                <td>USD ${{ inv_header.adjustments_subtotal|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Invoice Total</td>
+                <td>USD ${{ inv_header.invoice_total|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">-----</td>
+                <td>-----</td>
+            </tr>
+            <tr>
+                <td class="label">Line Items</td>
+                <td>{{ inv_header.line_item_count }}</td>
+            </tr>
+        </table>        
+    </div>
+</div>
+
+{% if inv_adjustments %}
+<div class="row">
+    <div class="column">
+        <h2>Invoice Adjustments</h2>
+        <table class="data-display">
+            <tr>
+                <th>Description</th>
+                <th>Ledger & Fund</th>
+                <th>Amount</th>
+            </tr>
+            {% for adjustment in inv_adjustments %}
+            <tr>
+                <td>{{ adjustment.description }}</td>
+                <td>{{ adjustment.ledger_name }} / {{ adjustment.fund_name }}</td>
+                <td>USD ${{ adjustment.usd_amount|floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% if inv_lines %}
+<div class="row">
+    <div class="column">
+        <h2>Invoice Lines</h2>
+        <table class="data-display">
+            <tr>
+                <th>Status</th>
+                <th>Title</th>
+                <th>Piece Identifier</th>
+                <th>Ledger & Fund</th>
+                <th>Amount</th>
+            </tr>
+        {% for line in inv_lines %}
+            <tr>
+                <td>{{ line.status }}</td>
+                <td>{{ line.bib_id }} {{ line.title }}</td>
+                <td>{% if line.piece_identifier %}{{line.piece_identifier }}{% endif %}</td>
+                <td>{{ line.ledger_name }} / {{ line.fund_name }}</td>
+                <td>USD ${{ line.usd_amount|floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

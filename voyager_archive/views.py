@@ -20,6 +20,7 @@ def search(request: HttpRequest) -> None:
             search_term = form.cleaned_data["search_term"]
 
             marc_record = None
+            inv_header = None
             item = None
             po_header = None
             vendor = None
@@ -29,6 +30,10 @@ def search(request: HttpRequest) -> None:
                 marc_record = get_bib_record(search_term)
             elif search_type == "MFHD_ID":
                 marc_record = get_mfhd_record(search_term)
+            elif search_type == "INV_NUMBER":
+                inv_header = get_inv_header(search_term)
+                inv_lines = get_inv_lines(inv_header.invoice_id)
+                inv_adjustments = get_inv_adjustments(inv_header.invoice_id)
             elif search_type == "ITEM_BARCODE":
                 item = get_item(search_term)
             elif search_type == "PO_NUMBER":
@@ -41,6 +46,14 @@ def search(request: HttpRequest) -> None:
             if marc_record:
                 context = {"form": form, "marc_record": marc_record}
                 return render(request, "voyager_archive/marc_display.html", context)
+            elif inv_header:
+                context = {
+                    "form": form,
+                    "inv_header": inv_header,
+                    "inv_lines": inv_lines,
+                    "inv_adjustments": inv_adjustments,
+                }
+                return render(request, "voyager_archive/invoice_display.html", context)
             elif item:
                 context = {"form": form, "item": item}
                 return render(request, "voyager_archive/item_display.html", context)

@@ -4,41 +4,49 @@ from django.db.models import QuerySet
 from .models import (
     AuthRecordView,
     BibRecordView,
+    InvoiceAdjustmentView,
+    InvoiceHeaderView,
+    InvoiceLineView,
+    MARCRecordView,
     MfhdRecordView,
     ItemView,
     PoHeaderView,
     PoLineItemView,
     VendorView,
     VendorAccountView,
-    InvoiceHeaderView,
 )
 
 
-def get_auth_record(auth_id: int) -> dict:
-    marc_text = get_object_or_404(AuthRecordView, auth_id=auth_id).auth_record
-    return get_marc_fields(marc_text)
+def get_auth_record(auth_id: int) -> AuthRecordView:
+    model_record = get_object_or_404(AuthRecordView, marc_record_id=auth_id)
+    return get_marc_fields(model_record)
 
 
-def get_bib_record(bib_id: int) -> dict:
-    marc_text = get_object_or_404(BibRecordView, bib_id=bib_id).bib_record
-    return get_marc_fields(marc_text)
+def get_bib_record(bib_id: int) -> BibRecordView:
+    model_record = get_object_or_404(BibRecordView, marc_record_id=bib_id)
+    return get_marc_fields(model_record)
 
 
-def get_mfhd_record(mfhd_id: int) -> dict:
-    marc_text = get_object_or_404(MfhdRecordView, mfhd_id=mfhd_id).mfhd_record
-    return get_marc_fields(marc_text)
+def get_mfhd_record(mfhd_id: int) -> MfhdRecordView:
+    model_record = get_object_or_404(MfhdRecordView, marc_record_id=mfhd_id)
+    return get_marc_fields(model_record)
 
 
-def get_marc_fields(marc_text: str) -> dict:
+def get_marc_fields(model_record: type[MARCRecordView]) -> dict:
+    # The model's MARC record, as a UTF-8 encoded string
+    marc_text = model_record.marc_record
+    # Get byte array from the MARC string, for pymarc
     byte_obj = marc_text.encode("utf-8")
+    # Convert byte array to a pymarc Record object
     marc_record = Record(data=byte_obj)
+
     marc_fields = marc_record.get_fields()
     marc_field_list = []
+    # This dict will be populated, then returned
     marc_record_dict = {}
     marc_record_dict["leader"] = marc_record.leader
 
     for field in marc_fields:
-
         tmp_rec_dict = {}
         tmp_rec_dict["tag"] = field.tag
         if hasattr(field, "data"):
@@ -61,6 +69,7 @@ def get_marc_fields(marc_text: str) -> dict:
         marc_field_list.append(tmp_rec_dict)
 
     marc_record_dict["fields"] = marc_field_list
+    marc_record_dict["suppressed"] = model_record.suppressed
     return marc_record_dict
 
 
@@ -80,8 +89,8 @@ def get_vendor_accts(vendor_id: int) -> QuerySet:
 
 
 def get_po_header(po_number: str) -> PoHeaderView:
-    purchase_order = get_object_or_404(PoHeaderView, po_number=po_number)
-    return purchase_order
+    po_header = get_object_or_404(PoHeaderView, po_number=po_number)
+    return po_header
 
 
 def get_po_lines(po_id: int) -> QuerySet:
