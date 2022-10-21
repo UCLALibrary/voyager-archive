@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: "0.1"
+description: Chart for Voyager Archive Django applications
+name: voyagerarchive
+version: 0.1.0
