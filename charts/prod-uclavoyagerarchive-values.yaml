@@ -1,12 +1,13 @@
-# Values for cataloging-statisticstest.
+# Values for ucla voyager-archive.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: uclalibrary/cataloging-statistics
-  tag: v0.9.8
+  repository: uclalibrary/voyager-archive
+  # tag: v0.0.1
+  tag: latest
   pullPolicy: Always
 
 nameOverride: ""
@@ -27,25 +28,25 @@ ingress:
     kubernetes.io/tls-acme: "true"
 
   hosts:
-    - host: 'catstats.library.ucla.edu'
+    - host: 'ucla-voy-archive.library.ucla.edu'
       paths:
         - "/"
   tls:
-  - secretName: cataloging-statistics-tls
+  - secretName: ucla-voyager-archive-tls
     hosts:
-      - catstats.library.ucla.edu
+      - ucla-voy-archive.library.ucla.edu
 
 django:
   env:
-    run_env: "test"
+    run_env: "prod"
     debug: "false"
     allowed_hosts:
-      - catstats.library.ucla.edu
+      - ucla-voy-archive.library.ucla.edu
     csrf_trusted_origins:
-      - https://catstats.library.ucla.edu
+      - https://ucla-voy-archive.library.ucla.edu
     db_backend: "django.db.backends.postgresql_psycopg2"
-    db_name: "cataloging_stats"
-    db_user: "cataloging_stats"
+    db_name: "ucla_voy_archive"
+    db_user: "voy_archive_access"
     db_host: "p-d-postgres.library.ucla.edu"
     db_port: 5432
     log_level: "INFO"
@@ -54,9 +55,8 @@ django:
     enabled: "true"
     env:
       # Application database used by django
-      db_password: "/systems/testsoftwaredev/cataloging-statisticstest/db_password"
-      django_secret_key: "/systems/testsoftwaredev/cataloging-statisticstest/django_secret_key"
-      alma_api_key: "/systems/testsoftwaredev/cataloging-statisticstest/alma_api_key"
+      db_password: "/systems/prodsoftwaredev/voyager-archive/db_password"
+      django_secret_key: "/systems/prodsoftwaredev/voyager-archive/django_secret_key"
 
 resources:
   limits:

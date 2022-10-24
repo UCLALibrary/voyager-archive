@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cataloging-statistics.fullname" . }}
-  namespace: cataloging-statistics{{ .Values.django.env.run_env }}
+  name: {{ include "voyager-archive.fullname" . }}
+  namespace: voyager-archive{{ .Values.django.env.run_env }}
   labels:
-    {{- include "cataloging-statistics.labels" . | nindent 4 }}
+    {{- include "voyager-archive.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "cataloging-statistics.selectorLabels" . | nindent 4 }}
+    {{- include "voyager-archive.selectorLabels" . | nindent 4 }}

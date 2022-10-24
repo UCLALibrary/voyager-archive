@@ -1,13 +1,13 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "cataloging-statistics.fullname" . -}}
+{{- $fullName := include "voyager-archive.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
-  namespace: cataloging-statistics{{ .Values.django.env.run_env }}
+  namespace: voyager-archive{{ .Values.django.env.run_env }}
   labels:
-    {{- include "cataloging-statistics.labels" . | nindent 4 }}
+    {{- include "voyager-archive.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

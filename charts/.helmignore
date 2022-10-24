@@ -23,5 +23,6 @@
 .vscode/
 
 # Environment-specific Values files
-/test-catalogingstatistics-values.yaml
-/prod-catalogingstatistics-values.yaml
+/prod-ethnovoyagerarchive-values.yaml
+/prod-ftvavoyagerarchive-values.yaml
+/prod-uclavoyagerarchive-values.yaml
