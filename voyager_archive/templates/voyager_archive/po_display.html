@@ -97,11 +97,10 @@
     </div>
 </div>
 
+{% if po_lines %}
 <div class="row">
     <div class="column">
-        {% if po_lines %}
         <h2>Purchase Order Lines</h2>
-        {% for line in po_lines %}
         <table class="data-display">
             <tr>
                 <th>Line #</th>
@@ -110,6 +109,7 @@
                 <th>Piece Identifier</th>
                 <th>Amount</th>
             </tr>
+        {% for line in po_lines %}
             <tr>
                 <td class="label">
                     #{{ line.line_item_number }} <a href="{% url 'po_line_display' line.line_item_id %}">(details)</a>
@@ -119,16 +119,10 @@
                 <td>{% if line.piece_identifer %}{{ line.piece_identifier }}{% endif %}</td>
                 <td>USD ${{ line.usd_amount|floatformat:2 }}</td>
             </tr>
-            {% comment %}
-            <tr>
-                <td class="label"></td>
-                <td></td>
-            </tr>
-            {% endcomment %}
-        </table>
         {% endfor %}
-        {% endif %}
+        </table>
     </div>
 </div>
+{% endif %}
 
 {% endblock %}

@@ -488,6 +488,8 @@ SET synchronous_commit TO off;
 
 COPY line_item_funds (copy_id,split_fund_seq,ledger_id,fund_id,percentage,prepay_percentage,amount,prepay,allocation_method) FROM STDIN;
 1159093	1	326	3777	100000000	100000000	0	0	P
+1159091	1	326	3777	100000000	100000000	0	0	P
+1159094	1	326	3777	100000000	100000000	0	0	P
 128592	1	355	6758	100000000	0	0	0	P
 1185415	1	336	4717	100000000	100000000	4400	0	P
 \.
@@ -648,4 +650,3 @@ COPY fund (fund_id,ledger_id,parent_fund,fund_name,normal_fund_name,fund_code,no
 \.
 
 COMMIT;
-
