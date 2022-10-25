@@ -12,7 +12,7 @@ image:
 
 nameOverride: ""
 
-fullnameOverride: ""
+fullnameOverride: "voyager-archive-ftva"
 
 service:
   type: NodePort
