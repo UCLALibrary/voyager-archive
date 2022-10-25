@@ -10,6 +10,7 @@ from .models import (
     MARCRecordView,
     MfhdRecordView,
     ItemView,
+    MfhdSummaryView,
     PoHeaderView,
     PoLineItemView,
     VendorView,
@@ -30,6 +31,13 @@ def get_bib_record(bib_id: int) -> BibRecordView:
 def get_mfhd_record(mfhd_id: int) -> MfhdRecordView:
     model_record = get_object_or_404(MfhdRecordView, marc_record_id=mfhd_id)
     return get_marc_fields(model_record)
+
+
+def get_mfhd_summary(bib_id: int) -> QuerySet:
+    mfhd_summary = MfhdSummaryView.objects.filter(bib_id=bib_id).order_by(
+        "location_code", "mfhd_id"
+    )
+    return mfhd_summary
 
 
 def get_marc_fields(model_record: type[MARCRecordView]) -> dict:

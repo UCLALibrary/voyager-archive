@@ -8,4 +8,9 @@ urlpatterns = [
         views.po_line_display,
         name="po_line_display",
     ),
+    path(
+        "marc_display/<str:marc_type>/<int:record_id>",
+        views.marc_display,
+        name="marc_display",
+    ),
 ]

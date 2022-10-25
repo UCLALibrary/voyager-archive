@@ -1,6 +1,7 @@
 {% extends 'voyager_archive/base.html' %}
 
 {% block content %}
+{% if form %}
 <form name="search_archive" id="search_archive" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
@@ -9,6 +10,7 @@
     <br>
     <button type="submit">Search</button>
 </form>
+{% endif %}
 <hr/>
 
 <div class="row">
@@ -36,7 +38,11 @@
                     </span>
                 </td>
                 <td>
+                    {% if field.tag == "004" %}
+                    <a href="{% url 'marc_display' 'bib' field.data %}">{{ field.data }}</a>
+                    {% else %}
                     {{ field.data }}
+                    {% endif %}
                     {% for delimiter, values in field.subfields.items %}
                         {% for value in values %}
                             <span class='delimiter'>${{ delimiter }}</span> {{ value }}
@@ -49,5 +55,30 @@
     </div>
 </div>
 
+{% if mfhd_summary %}
+<div class="row">
+    <div class="column">
+        <h2>Holdings Summary</h2>
+        <table class="data-display">
+            <tr>
+                <th>Holdings ID</th>
+                <th>Location</th>
+                <th>Call Number</th>
+                <th>Suppressed</th>
+            </tr>
+        {% for mfhd in mfhd_summary %}
+            <tr>
+                <td>
+                    <a href="{% url 'marc_display' 'mfhd' mfhd.mfhd_id %}">{{ mfhd.mfhd_id }}</a>
+                </td>
+                <td>{{ mfhd.location_code }} ({{ mfhd.location_name }})</td>
+                <td>{{ mfhd.call_number }}</td>
+                <td>{{ mfhd.suppressed }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}
