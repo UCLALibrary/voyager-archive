@@ -1,6 +1,7 @@
 # Values for ucla voyager-archive.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+# voyager-archive-ucla
 
 replicaCount: 1
 
