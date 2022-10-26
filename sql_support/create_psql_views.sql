@@ -168,6 +168,9 @@ select
 ,	ili.inv_line_item_id
 ,	ili.line_item_id
 ,	ilif.copy_id
+,	i.invoice_number
+,	po.po_id
+,	po.po_number
 ,	li.bib_id
 ,	bt.title
 ,	lis.line_item_status_desc as status
@@ -191,8 +194,10 @@ from invoice_line_item ili
 inner join invoice_line_item_funds ilif on ili.inv_line_item_id = ilif.inv_line_item_id
 inner join fund f on ilif.ledger_id = f.ledger_id and ilif.fund_id = f.fund_id
 inner join ledger l on f.ledger_id = l.ledger_id
+inner join invoice i on ili.invoice_id = i.invoice_id
 inner join line_item li on ili.line_item_id = li.line_item_id
 inner join bib_title bt on li.bib_id = bt.bib_id
+inner join purchase_order po on li.po_id = po.po_id
 inner join line_item_copy_status lics on ili.line_item_id = lics.line_item_id
 inner join line_item_status lis on lics.line_item_status = lis.line_item_status
 ;

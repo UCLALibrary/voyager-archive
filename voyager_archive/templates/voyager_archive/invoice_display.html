@@ -108,6 +108,7 @@
         <h2>Invoice Lines</h2>
         <table class="data-display">
             <tr>
+                <th>Line #</th>
                 <th>Status</th>
                 <th>Title</th>
                 <th>Piece Identifier</th>
@@ -116,6 +117,8 @@
             </tr>
         {% for line in inv_lines %}
             <tr>
+                {% comment %}No real invoice line numbers, so use loop counter (1-based){% endcomment %}
+                <td>#{{ forloop.counter }} <a href="{% url 'inv_line_display' line.inv_line_item_id %}">(details)</a></td>
                 <td>{{ line.status }}</td>
                 <td>{{ line.bib_id }} {{ line.title }}</td>
                 <td>{% if line.piece_identifier %}{{line.piece_identifier }}{% endif %}</td>

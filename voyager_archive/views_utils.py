@@ -125,6 +125,13 @@ def get_inv_lines(invoice_id: int) -> QuerySet:
     return inv_lines
 
 
+def get_inv_lines_by_line_id(inv_line_item_id: int) -> QuerySet:
+    inv_lines = InvoiceLineView.objects.filter(
+        inv_line_item_id=inv_line_item_id
+    ).order_by("split_fund_seq")
+    return inv_lines
+
+
 def get_inv_adjustments(invoice_id: int) -> QuerySet:
     inv_adjustments = InvoiceAdjustmentView.objects.filter(
         invoice_id=invoice_id
