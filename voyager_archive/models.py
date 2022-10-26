@@ -2686,3 +2686,16 @@ class BibTitle(models.Model):
     class Meta:
         managed = False
         db_table = "bib_title"
+
+
+class MfhdSummaryView(models.Model):
+    mfhd_id = models.DecimalField(primary_key=True, max_digits=38, decimal_places=0)
+    bib_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    location_code = models.CharField(max_length=10, blank=True, null=True)
+    location_name = models.CharField(max_length=25, blank=True, null=True)
+    call_number = models.CharField(max_length=300, blank=True, null=True)
+    suppressed = models.CharField(max_length=1, blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = "mfhd_summary_view"

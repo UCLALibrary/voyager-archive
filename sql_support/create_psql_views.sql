@@ -343,3 +343,25 @@ from mfhd_record mr
 inner join mfhd_master mm on mr.mfhd_id = mm.mfhd_id
 ;
 
+
+/*	View of holdings (mfhd) summary data.
+	Separate from mfhd_record_view, similar in concept
+	to bib_title_view.
+	Can be multiple rows per holdings record, if that's
+	linked to more than one bib record (e.g., bound-withs).
+*/
+drop view if exists mfhd_summary_view;
+create or replace view mfhd_summary_view as
+select
+	mr.mfhd_id
+,	bm.bib_id
+,	l.location_code
+,	l.location_name
+,	mm.display_call_no as call_number
+,	mm.suppress_in_opac as suppressed
+from mfhd_record mr
+inner join bib_mfhd bm on mr.mfhd_id = bm.mfhd_id
+inner join mfhd_master mm on mr.mfhd_id = mm.mfhd_id
+inner join location l on mm.location_id = l.location_id
+;
+

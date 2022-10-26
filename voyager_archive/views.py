@@ -20,6 +20,7 @@ def search(request: HttpRequest) -> None:
             search_term = form.cleaned_data["search_term"]
 
             marc_record = None
+            mfhd_summary = None
             inv_header = None
             item = None
             po_header = None
@@ -28,6 +29,7 @@ def search(request: HttpRequest) -> None:
                 marc_record = get_auth_record(search_term)
             elif search_type == "BIB_ID":
                 marc_record = get_bib_record(search_term)
+                mfhd_summary = get_mfhd_summary(search_term)
             elif search_type == "MFHD_ID":
                 marc_record = get_mfhd_record(search_term)
             elif search_type == "INV_NUMBER":
@@ -44,7 +46,11 @@ def search(request: HttpRequest) -> None:
                 vendor_accts = get_vendor_accts(vendor.vendor_id)
 
             if marc_record:
-                context = {"form": form, "marc_record": marc_record}
+                context = {
+                    "form": form,
+                    "marc_record": marc_record,
+                    "mfhd_summary": mfhd_summary,
+                }
                 return render(request, "voyager_archive/marc_display.html", context)
             elif inv_header:
                 context = {
@@ -72,3 +78,14 @@ def po_line_display(request: HttpRequest, po_line_item_id: int) -> None:
     po_lines = get_po_lines_by_line_id(po_line_item_id)
     context = {"po_lines": po_lines}
     return render(request, "voyager_archive/po_line_display.html", context)
+
+
+def marc_display(request: HttpRequest, marc_type: str, record_id: int) -> None:
+    if marc_type == "bib":
+        marc_record = get_bib_record(record_id)
+    if marc_type == "mfhd":
+        marc_record = get_mfhd_record(record_id)
+    context = {
+        "marc_record": marc_record,
+    }
+    return render(request, "voyager_archive/marc_display.html", context)
