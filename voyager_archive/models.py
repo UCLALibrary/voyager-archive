@@ -2486,6 +2486,9 @@ class InvoiceLineView(models.Model):
     copy_id = models.DecimalField(
         max_digits=38, decimal_places=0, blank=True, null=True
     )
+    invoice_number = models.CharField(max_length=25, blank=True, null=True)
+    po_id = models.DecimalField(max_digits=38, decimal_places=0, blank=True, null=True)
+    po_number = models.CharField(max_length=25, blank=True, null=True)
     unit_price = models.DecimalField(
         max_digits=65535, decimal_places=65535, blank=True, null=True
     )

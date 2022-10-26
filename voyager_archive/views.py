@@ -1,3 +1,4 @@
+from curses.ascii import HT
 from http.client import INTERNAL_SERVER_ERROR
 import logging
 from django.shortcuts import render
@@ -89,3 +90,9 @@ def marc_display(request: HttpRequest, marc_type: str, record_id: int) -> None:
         "marc_record": marc_record,
     }
     return render(request, "voyager_archive/marc_display.html", context)
+
+
+def inv_line_display(request: HttpRequest, inv_line_item_id: int) -> None:
+    inv_lines = get_inv_lines_by_line_id(inv_line_item_id)
+    context = {"inv_lines": inv_lines}
+    return render(request, "voyager_archive/invoice_line_display.html", context)
