@@ -44,7 +44,7 @@ django:
     csrf_trusted_origins:
       - https://ftva-voy-archive.library.ucla.edu
     db_backend: "django.db.backends.postgresql_psycopg2"
-    db_name: "ucla_voy_archive"
+    db_name: "ftva_voy_archive"
     db_user: "voy_archive_access"
     db_host: "p-d-postgres.library.ucla.edu"
     db_port: 5432
