@@ -9,6 +9,13 @@ if [ "$DJANGO_RUN_ENV" = "dev" ]; then
   pip install --no-cache-dir -r requirements.txt --user --no-warn-script-location
 fi
 
+# Logging framework creates log file but not directory.
+# Create log directory if it does not exist.
+echo "Checking log directory..."
+if [ ! -d logs ]; then
+  mkdir logs
+fi
+
 # Check when database is ready for connections
 echo "Checking database connectivity..."
 until python -c 'import os, psycopg2 ; conn = psycopg2.connect(host=os.environ.get("DJANGO_DB_HOST"),user=os.environ.get("DJANGO_DB_USER"),password=os.environ.get("DJANGO_DB_PASSWORD"),dbname=os.environ.get("DJANGO_DB_NAME"))' ; do
