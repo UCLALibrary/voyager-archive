@@ -83,7 +83,9 @@
         {% for item in item_summary %}
             <tr>
                 <td>
-                    <a href="{% url 'item_display' item.item_id %}">{{ item.item_barcode }}</a>
+                    {% comment %}Some items lack barcodes{% endcomment %}
+                    <a href="{% url 'item_display' item.item_id %}">
+                        {% if item.item_barcode %}{{ item.item_barcode }}{% else %}No barcode{% endif %}</a>
                 </td>
                 <td>{{ item.perm_location }}</td>
                 <td>{{ item.item_type }}</td>
