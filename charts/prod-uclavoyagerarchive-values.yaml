@@ -7,7 +7,9 @@ replicaCount: 1
 
 image:
   repository: uclalibrary/voyager-archive
-  tag: v0.9.0
+  # tag is *not* set here, but in the generic values.yaml instead.
+  # This avoids setting tag version in all 3 environment-specific values files.
+  # TODO: How to correctly handle this if we add a test cluster?
   pullPolicy: Always
 
 nameOverride: ""

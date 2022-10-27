@@ -1,10 +1,7 @@
-from curses.ascii import HT
-from http.client import INTERNAL_SERVER_ERROR
 import logging
 from django.shortcuts import render
 from django.http.request import HttpRequest  # for code completion
 from django.http.response import HttpResponse
-from .forms import VoyArchiveForm
 from .views_utils import *
 
 
@@ -13,9 +10,11 @@ logger = logging.getLogger(__name__)
 
 def search(request: HttpRequest) -> None:
     if request.method == "POST":
-        form = VoyArchiveForm(request.POST)
+        # Get form with search data from this request,
+        # via utility function which also adds form
+        # (with or without data) to all contexts for rendering.
+        form = get_search_form(request)
         if form.is_valid():
-            # Do stuff, using form.cleaned_data['search_type'] and form.cleaned_data['search_term']
             logger.info(f"Form data: {form.cleaned_data}")
             search_type = form.cleaned_data["search_type"]
             search_term = form.cleaned_data["search_term"]
@@ -48,31 +47,30 @@ def search(request: HttpRequest) -> None:
 
             if marc_record:
                 context = {
-                    "form": form,
                     "marc_record": marc_record,
                     "mfhd_summary": mfhd_summary,
                 }
                 return render(request, "voyager_archive/marc_display.html", context)
             elif inv_header:
                 context = {
-                    "form": form,
                     "inv_header": inv_header,
                     "inv_lines": inv_lines,
                     "inv_adjustments": inv_adjustments,
                 }
                 return render(request, "voyager_archive/invoice_display.html", context)
             elif item:
-                context = {"form": form, "item": item}
+                context = {"item": item}
                 return render(request, "voyager_archive/item_display.html", context)
             elif po_header:
-                context = {"form": form, "po_header": po_header, "po_lines": po_lines}
+                context = {"po_header": po_header, "po_lines": po_lines}
                 return render(request, "voyager_archive/po_display.html", context)
             elif vendor:
-                context = {"form": form, "vendor": vendor, "vendor_accts": vendor_accts}
+                context = {"vendor": vendor, "vendor_accts": vendor_accts}
                 return render(request, "voyager_archive/vendor_display.html", context)
     else:
-        form = VoyArchiveForm()
-        return render(request, "voyager_archive/search.html", {"form": form})
+        # No POST, no search done, use blank form included in base context
+        context = {}
+        return render(request, "voyager_archive/search.html", context)
 
 
 def po_line_display(request: HttpRequest, po_line_item_id: int) -> None:

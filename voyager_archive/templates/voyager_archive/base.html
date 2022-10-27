@@ -10,6 +10,17 @@
             <a href="https://ftva-voy-archive.library.ucla.edu/">FTVA</a> / 
             <a href="https://ucla-voy-archive.library.ucla.edu/">UCLA</a>
         </p>
+        <form name="search_archive" id="search_archive" action="{% url 'search' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {% comment %}
+                search_form is added via context processor, to be available in all contexts.
+                {% endcomment %}
+                {{ search_form.as_table }}
+            </table>
+            <button type="submit">Search</button>
+        </form>
+        <hr/>
         {% block content %}
         {% endblock %}
     </body>
