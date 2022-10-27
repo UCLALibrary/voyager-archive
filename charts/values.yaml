@@ -10,7 +10,7 @@ image:
   # the same image automatically, set application tag version
   # here (once) instead of in each environment-specific values file.
   # TODO: How to correctly handle this if we add a test cluster?
-  tag: v0.9.1
+  tag: v0.9.2
   pullPolicy: Always
 
 nameOverride: ""
