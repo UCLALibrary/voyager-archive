@@ -1,18 +1,6 @@
 {% extends 'voyager_archive/base.html' %}
 
 {% block content %}
-{% if form %}
-<form name="search_archive" id="search_archive" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <br>
-    <button type="submit">Search</button>
-</form>
-{% endif %}
-<hr/>
-
 <div class="row">
     <div class="column">
         <table class="data-display">
