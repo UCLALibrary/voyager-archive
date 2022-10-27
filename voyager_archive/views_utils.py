@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
-from pymarc import Record
+from django.http.request import HttpRequest  # for code completion
 from django.db.models import QuerySet
+from pymarc import Record
+from .forms import VoyArchiveForm
 from .models import (
     AuthRecordView,
     BibRecordView,
@@ -16,6 +18,16 @@ from .models import (
     VendorView,
     VendorAccountView,
 )
+
+
+def get_search_form(request: HttpRequest = None) -> VoyArchiveForm:
+    # Convenience method to allow form to be
+    # displayed on any page, whether search has
+    # been done or not.
+    if request and request.method == "POST":
+        return VoyArchiveForm(request.POST)
+    else:
+        return VoyArchiveForm()
 
 
 def get_auth_record(auth_id: int) -> AuthRecordView:
