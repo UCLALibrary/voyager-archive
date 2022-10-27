@@ -23,4 +23,9 @@ urlpatterns = [
         views.marc_display,
         name="marc_display",
     ),
+    path(
+        "item_display/<int:item_id>",
+        views.item_display,
+        name="item_display",
+    ),
 ]

@@ -69,4 +69,30 @@
 </div>
 {% endif %}
 
+{% if item_summary %}
+<div class="row">
+    <div class="column">
+        <h2>Item Summary</h2>
+        <table class="data-display">
+            <tr>
+                <th>Barcode</th>
+                <th>Location</th>
+                <th>Item Type</th>
+                <th>Enumeration</th>
+            </tr>
+        {% for item in item_summary %}
+            <tr>
+                <td>
+                    <a href="{% url 'item_display' item.item_id %}">{{ item.item_barcode }}</a>
+                </td>
+                <td>{{ item.perm_location }}</td>
+                <td>{{ item.item_type }}</td>
+                <td>{{ item.item_enum }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% endif %}
+
 {% endblock %}

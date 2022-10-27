@@ -93,9 +93,21 @@ def get_marc_fields(model_record: type[MARCRecordView]) -> dict:
     return marc_record_dict
 
 
-def get_item(item_barcode: str) -> ItemView:
+def get_item_by_barcode(item_barcode: str) -> ItemView:
     item = get_object_or_404(ItemView, item_barcode=item_barcode)
     return item
+
+
+def get_item_by_id(item_id: int) -> ItemView:
+    item = ItemView.objects.get(item_id=item_id)
+    return item
+
+
+def get_item_summary(mfhd_id: int) -> QuerySet:
+    item_summary = ItemView.objects.filter(mfhd_id=mfhd_id).order_by(
+        "item_sequence_number"
+    )
+    return item_summary
 
 
 def get_vendor(vendor_code: str) -> VendorView:

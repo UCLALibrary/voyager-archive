@@ -21,6 +21,7 @@ def search(request: HttpRequest) -> None:
 
             marc_record = None
             mfhd_summary = None
+            item_summary = None
             inv_header = None
             item = None
             po_header = None
@@ -32,12 +33,13 @@ def search(request: HttpRequest) -> None:
                 mfhd_summary = get_mfhd_summary(search_term)
             elif search_type == "MFHD_ID":
                 marc_record = get_mfhd_record(search_term)
+                item_summary = get_item_summary(search_term)
             elif search_type == "INV_NUMBER":
                 inv_header = get_inv_header(search_term)
                 inv_lines = get_inv_lines(inv_header.invoice_id)
                 inv_adjustments = get_inv_adjustments(inv_header.invoice_id)
             elif search_type == "ITEM_BARCODE":
-                item = get_item(search_term)
+                item = get_item_by_barcode(search_term)
             elif search_type == "PO_NUMBER":
                 po_header = get_po_header(search_term)
                 po_lines = get_po_lines(po_header.po_id)
@@ -49,6 +51,7 @@ def search(request: HttpRequest) -> None:
                 context = {
                     "marc_record": marc_record,
                     "mfhd_summary": mfhd_summary,
+                    "item_summary": item_summary,
                 }
                 return render(request, "voyager_archive/marc_display.html", context)
             elif inv_header:
@@ -80,12 +83,18 @@ def po_line_display(request: HttpRequest, po_line_item_id: int) -> None:
 
 
 def marc_display(request: HttpRequest, marc_type: str, record_id: int) -> None:
+    mfhd_summary = None
+    item_summary = None
     if marc_type == "bib":
         marc_record = get_bib_record(record_id)
+        mfhd_summary = get_mfhd_summary(record_id)
     if marc_type == "mfhd":
         marc_record = get_mfhd_record(record_id)
+        item_summary = get_item_summary(record_id)
     context = {
         "marc_record": marc_record,
+        "mfhd_summary": mfhd_summary,
+        "item_summary": item_summary,
     }
     return render(request, "voyager_archive/marc_display.html", context)
 
@@ -94,3 +103,9 @@ def inv_line_display(request: HttpRequest, inv_line_item_id: int) -> None:
     inv_lines = get_inv_lines_by_line_id(inv_line_item_id)
     context = {"inv_lines": inv_lines}
     return render(request, "voyager_archive/invoice_line_display.html", context)
+
+
+def item_display(request: HttpRequest, item_id: int) -> None:
+    item = get_item_by_id(item_id)
+    context = {"item": item}
+    return render(request, "voyager_archive/item_display.html", context)
