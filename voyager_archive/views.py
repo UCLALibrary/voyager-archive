@@ -105,6 +105,12 @@ def inv_line_display(request: HttpRequest, inv_line_item_id: int) -> None:
     return render(request, "voyager_archive/invoice_line_display.html", context)
 
 
+def inv_adj_display(request: HttpRequest, payment_id: int) -> None:
+    inv_adjustment = get_inv_adjustment(payment_id)
+    context = {"inv_adjustment": inv_adjustment}
+    return render(request, "voyager_archive/invoice_adjustment_display.html", context)
+
+
 def item_display(request: HttpRequest, item_id: int) -> None:
     item = get_item_by_id(item_id)
     context = {"item": item}

@@ -1,0 +1,62 @@
+{% extends 'voyager_archive/base.html' %}
+{% block content %}
+
+{% comment %}Only one payment per payment_id{% endcomment %}
+<div class="row">
+    <div class="column">
+        <h2>Invoice Information</h2>
+        <table class="data-display">
+            <tr>
+                <td class="label">Invoice Number</td>
+                <td>{{ inv_adjustment.invoice_number }}</td>
+            </tr>
+            <tr>
+                <td class="label">Invoice ID</td>
+                <td>{{ inv_adjustment.invoice_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Payment ID</td>
+                <td>{{ inv_adjustment.payment_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Description</td>
+                <td>{{ inv_adjustment.description }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="column">
+        <h2>Fund and Price Information</h2>
+        <table class="data-display">
+            <tr>
+                <td class="label">Raw Amount</td>
+                <td>{{ inv_adjustment.raw_amount|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">USD Amount</td>
+                <td>{{ inv_adjustment.usd_amount|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td class="label">Currency Code</td>
+                <td>{{ inv_adjustment.currency_code }}</td>
+            </tr>
+            <tr>
+                <td class="label">Ledger Name</td>
+                <td>{{ inv_adjustment.ledger_name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Fund Name</td>
+                <td>{{ inv_adjustment.fund_name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Fund Code</td>
+                <td>{{ inv_adjustment.fund_code }}</td>
+            </tr>
+            <tr>
+                <td class="label">FAU</td>
+                <td>{{ inv_adjustment.fau }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

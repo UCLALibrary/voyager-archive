@@ -76,12 +76,15 @@
         <h2>Invoice Adjustments</h2>
         <table class="data-display">
             <tr>
+                <th>Line #</th>
                 <th>Description</th>
                 <th>Ledger & Fund</th>
                 <th>Amount</th>
             </tr>
             {% for adjustment in inv_adjustments %}
             <tr>
+                {% comment %}No real adjustment numbers, so use loop counter (1-based){% endcomment %}
+                <td>#{{ forloop.counter }} <a href="{% url 'inv_adj_display' adjustment.payment_id %}">(details)</a></td>
                 <td>{{ adjustment.description }}</td>
                 <td>{{ adjustment.ledger_name }} / {{ adjustment.fund_name }}</td>
                 <td>USD ${{ adjustment.usd_amount|floatformat:2 }}</td>

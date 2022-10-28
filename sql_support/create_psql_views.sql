@@ -138,6 +138,7 @@ create or replace view invoice_adjustment_view as
 select
 	pa.payment_id
 ,	pa.object_id as invoice_id
+,	i.invoice_number
 ,	ar.reason_text as description
 ,	i.currency_code
 --	All of our Voyager currencies use 2 decimal places.
