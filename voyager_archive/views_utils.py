@@ -157,7 +157,14 @@ def get_inv_lines_by_line_id(inv_line_item_id: int) -> QuerySet:
 
 
 def get_inv_adjustments(invoice_id: int) -> QuerySet:
+    # Gets all invoice adjustments for an invoice
     inv_adjustments = InvoiceAdjustmentView.objects.filter(
         invoice_id=invoice_id
     ).order_by("payment_id")
     return inv_adjustments
+
+
+def get_inv_adjustment(payment_id: int) -> InvoiceAdjustmentView:
+    # Gets one specific invoice adjustment
+    inv_adjustment = InvoiceAdjustmentView.objects.get(payment_id=payment_id)
+    return inv_adjustment

@@ -2454,6 +2454,7 @@ class InvoiceAdjustmentView(models.Model):
     invoice_id = models.DecimalField(
         max_digits=38, decimal_places=0, blank=True, null=True
     )
+    invoice_number = models.CharField(max_length=25, blank=True, null=True)
     description = models.CharField(max_length=50, blank=True, null=True)
     currency_code = models.CharField(max_length=3, blank=True, null=True)
     raw_amount = models.DecimalField(
