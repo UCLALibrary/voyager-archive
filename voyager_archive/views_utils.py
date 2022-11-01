@@ -115,6 +115,11 @@ def get_vendor(vendor_code: str) -> VendorView:
     return vendor
 
 
+def get_vendor_by_vendor_id(vendor_id: int) -> VendorView:
+    vendor = VendorView.objects.get(vendor_id=vendor_id)
+    return vendor
+
+
 def get_vendor_accts(vendor_id: int) -> QuerySet:
     vendor_accts = VendorAccountView.objects.filter(vendor_id=vendor_id)
     return vendor_accts
@@ -122,6 +127,11 @@ def get_vendor_accts(vendor_id: int) -> QuerySet:
 
 def get_po_header(po_number: str) -> PoHeaderView:
     po_header = get_object_or_404(PoHeaderView, po_number=po_number)
+    return po_header
+
+
+def get_po_header_by_po_id(po_id: int) -> PoHeaderView:
+    po_header = PoHeaderView.objects.get(po_id=po_id)
     return po_header
 
 

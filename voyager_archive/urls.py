@@ -9,6 +9,11 @@ urlpatterns = [
         name="search",
     ),
     path(
+        "po_display/<int:po_id>",
+        views.po_display,
+        name="po_display",
+    ),
+    path(
         "po_line_display/<int:po_line_item_id>",
         views.po_line_display,
         name="po_line_display",
@@ -32,5 +37,10 @@ urlpatterns = [
         "item_display/<int:item_id>",
         views.item_display,
         name="item_display",
+    ),
+    path(
+        "vendor_display/<int:vendor_id>",
+        views.vendor_display,
+        name="vendor_display",
     ),
 ]

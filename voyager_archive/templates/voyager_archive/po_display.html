@@ -12,7 +12,7 @@
             <tr>
                 <td class="label">Vendor</td>
                 <td>
-                    {{ po_header.vendor_code }}
+                    <a href="{% url 'vendor_display' po_header.vendor_id %}">{{ po_header.vendor_code }}</a>
                     {% if po_header.vendor_account_number %}(account {{po_header.vendor_account_number }}){% endif %}
                 </td>
             </tr>
@@ -104,7 +104,7 @@
                 <td class="label">
                     #{{ line.line_item_number }} <a href="{% url 'po_line_display' line.line_item_id %}">(details)</a>
                 </td>
-                <td>{{ line.bib_id }} {{ line.title }}</td>
+                <td><a href="{% url 'marc_display' 'bib' line.bib_id %}">{{ line.title }}</a></td>
                 <td>{{ line.line_item_status }} / {{ line.inv_line_status }} ({{ line.status_date }})</td>
                 <td>{% if line.piece_identifer %}{{ line.piece_identifier }}{% endif %}</td>
                 <td>USD ${{ line.usd_amount|floatformat:2 }}</td>
