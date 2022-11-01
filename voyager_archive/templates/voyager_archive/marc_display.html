@@ -9,19 +9,19 @@
             display before regular fields.
             {% endcomment %}
             <tr>
-                <td>Suppressed</td>
-                <td></td>
+                <td class="marc-tag">Suppressed</td>
+                <td class="marc-ind"></td>
                 <td>{{ marc_record.suppressed }}</td>
             </tr>
             <tr>
-                <td>LDR</td>
-                <td></td>
+                <td class="marc-tag">LDR</td>
+                <td class="marc-ind"></td>
                 <td>{{ marc_record.leader }}</td>
             </tr>
             {% for field in marc_record.fields %}
             <tr>
-                <td>{{ field.tag }}</td>
-                <td><span class='indicators'>
+                <td class="marc-tag">{{ field.tag }}</td>
+                <td class="marc-ind"><span class="indicators">
                     {{ field.indicator1 }}&nbsp;{{ field.indicator2 }}
                     </span>
                 </td>
@@ -33,7 +33,7 @@
                     {% endif %}
                     {% for delimiter, values in field.subfields.items %}
                         {% for value in values %}
-                            <span class='delimiter'>${{ delimiter }}</span> {{ value }}
+                            <span class="delimiter">${{ delimiter }}</span> {{ value }}
                         {% endfor %}
                     {% endfor %}
                 </td>

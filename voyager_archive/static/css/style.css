@@ -40,3 +40,12 @@
   .label {
     font-weight: bold;
   }
+
+  .marc-tag {
+    max-width: 3ch;
+  }
+  
+  .marc-ind {
+    max-width: 3ch;
+  }
+  
