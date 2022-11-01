@@ -12,7 +12,7 @@
             <tr>
                 <td class="label">Vendor</td>
                 <td>
-                    {{ inv_header.vendor_code }}
+                    <a href="{% url 'vendor_display' inv_header.vendor_id %}">{{ inv_header.vendor_code }}</a>
                     {% if inv_header.vendor_account_number %}(account {{inv_header.vendor_account_number }}){% endif %}
                 </td>
             </tr>
@@ -113,7 +113,7 @@
                 {% comment %}No real invoice line numbers, so use loop counter (1-based){% endcomment %}
                 <td>#{{ forloop.counter }} <a href="{% url 'inv_line_display' line.inv_line_item_id %}">(details)</a></td>
                 <td>{{ line.status }}</td>
-                <td>{{ line.bib_id }} {{ line.title }}</td>
+                <td><a href="{% url 'marc_display' 'bib' line.bib_id %}">{{ line.title }}</a></td>
                 <td>{% if line.piece_identifier %}{{line.piece_identifier }}{% endif %}</td>
                 <td>{{ line.ledger_name }} / {{ line.fund_name }}</td>
                 <td>USD ${{ line.usd_amount|floatformat:2 }}</td>

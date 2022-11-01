@@ -86,20 +86,20 @@
         <h2>Item Information</h2>
         <table class="data-display">
             <tr>
-                <td class="label">Bib ID</td>
-                <td>{{ line.bib_id }}</td>
-            </tr>
-            <tr>
                 <td class="label">Copy ID</td>
                 <td>{{ line.copy_id }}</td>
             </tr>
             <tr>
-                <td class="label">MFHD ID</td>
-                <td>{{ line.mfhd_id }}</td>
-            </tr>
-            <tr>
                 <td class="label">Title</td>
                 <td>{{ line.title }}</td>
+            </tr>
+            <tr>
+                <td class="label">Bib ID</td>
+                <td><a href="{% url 'marc_display' 'bib' line.bib_id %}">{{ line.bib_id }}</a></td>
+            </tr>
+            <tr>
+                <td class="label">MFHD ID</td>
+                <td><a href="{% url 'marc_display' 'mfhd' line.mfhd_id %}">{{ line.mfhd_id }}</a></td>
             </tr>
             <tr>
                 <td class="label">Location Code</td>

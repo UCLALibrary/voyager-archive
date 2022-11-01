@@ -12,7 +12,7 @@
             </tr>
             <tr>
                 <td class="label">PO Number</td>
-                <td>{{ line.po_number }}</td>
+                <td><a href="{% url 'po_display' line.po_id %}">{{ line.po_number }}</a></td>
             </tr>
             <tr>
                 <td class="label">Invoice ID</td>
@@ -64,7 +64,7 @@
         <table class="data-display">
             <tr>
                 <td class="label">Bib ID</td>
-                <td>{{ line.bib_id }}</td>
+                <td><a href="{% url 'marc_display' 'bib' line.bib_id %}">{{ line.bib_id }}</a></td>
             </tr>
             <tr>
                 <td class="label">Title</td>

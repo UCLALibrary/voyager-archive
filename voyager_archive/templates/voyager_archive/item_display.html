@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td class="label">MFHD ID</td>
-                <td>{{ item.mfhd_id }}</td>
+                <td><a href="{% url 'marc_display' 'mfhd' item.mfhd_id %}">{{ item.mfhd_id }}</a></td>
             </tr>
             <tr>
                 <td class="label">Item Type</td>

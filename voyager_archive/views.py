@@ -82,6 +82,13 @@ def po_line_display(request: HttpRequest, po_line_item_id: int) -> None:
     return render(request, "voyager_archive/po_line_display.html", context)
 
 
+def po_display(request: HttpRequest, po_id: int) -> None:
+    po_header = get_po_header_by_po_id(po_id)
+    po_lines = get_po_lines(po_id)
+    context = {"po_header": po_header, "po_lines": po_lines}
+    return render(request, "voyager_archive/po_display.html", context)
+
+
 def marc_display(request: HttpRequest, marc_type: str, record_id: int) -> None:
     mfhd_summary = None
     item_summary = None
@@ -115,3 +122,10 @@ def item_display(request: HttpRequest, item_id: int) -> None:
     item = get_item_by_id(item_id)
     context = {"item": item}
     return render(request, "voyager_archive/item_display.html", context)
+
+
+def vendor_display(request: HttpRequest, vendor_id: int) -> None:
+    vendor = get_vendor_by_vendor_id(vendor_id)
+    vendor_accts = get_vendor_accts(vendor_id)
+    context = {"vendor": vendor, "vendor_accts": vendor_accts}
+    return render(request, "voyager_archive/vendor_display.html", context)
