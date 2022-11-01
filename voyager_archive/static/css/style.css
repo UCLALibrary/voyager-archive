@@ -22,7 +22,7 @@
   
   table.data-display th, table.data-display td {
     text-align: left;
-    padding: 12px;
+    padding: 6px;
   }
   
   table.data-display tr:nth-child(even) {
