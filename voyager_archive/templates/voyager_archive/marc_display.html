@@ -9,13 +9,11 @@
             display before regular fields.
             {% endcomment %}
             <tr>
-                <td class="marc-tag">Suppressed</td>
-                <td class="marc-ind"></td>
+                <td class="marc-tag" colspan="2">Suppressed</td>
                 <td>{{ marc_record.suppressed }}</td>
             </tr>
             <tr>
-                <td class="marc-tag">LDR</td>
-                <td class="marc-ind"></td>
+                <td class="marc-tag" colspan="2">LDR</td>
                 <td>{{ marc_record.leader }}</td>
             </tr>
             {% for field in marc_record.fields %}

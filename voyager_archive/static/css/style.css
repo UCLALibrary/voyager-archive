@@ -16,6 +16,7 @@
   table.data-display {
     border-collapse: collapse;
     border-spacing: 0;
+    table-layout: fixed;
     width: 100%;
     border: 1px solid #ddd;
   }
@@ -42,10 +43,10 @@
   }
 
   .marc-tag {
-    max-width: 3ch;
+    width: 15ch;
   }
   
   .marc-ind {
-    max-width: 3ch;
+    width: 5ch;
   }
   
