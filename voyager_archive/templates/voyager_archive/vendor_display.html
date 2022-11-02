@@ -101,8 +101,12 @@
                 <td class="label">Default PO Type</td>
                 <td>{{ acct.default_po_type }}</td>
             </tr>
+            {% comment %}Separate accounts with a blank row{% endcomment %}
             {% if not forloop.last %}
-            <hr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
             {% endif %}
             {% endfor %}
         </table>
