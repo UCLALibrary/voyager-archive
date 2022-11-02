@@ -93,9 +93,9 @@ def get_marc_fields(model_record: type[MARCRecordView]) -> dict:
     return marc_record_dict
 
 
-def get_item_by_barcode(item_barcode: str) -> ItemView:
-    item = get_object_or_404(ItemView, item_barcode=item_barcode)
-    return item
+def get_items(item_barcode: str) -> QuerySet:
+    items = ItemView.objects.filter(item_barcode=item_barcode).order_by("mfhd_id")
+    return items
 
 
 def get_item_by_id(item_id: int) -> ItemView:
@@ -110,9 +110,9 @@ def get_item_summary(mfhd_id: int) -> QuerySet:
     return item_summary
 
 
-def get_vendor(vendor_code: str) -> VendorView:
-    vendor = get_object_or_404(VendorView, vendor_code=vendor_code)
-    return vendor
+def get_vendors(vendor_code: str) -> QuerySet:
+    vendors = VendorView.objects.filter(vendor_code=vendor_code).order_by("vendor_name")
+    return vendors
 
 
 def get_vendor_by_vendor_id(vendor_id: int) -> VendorView:
@@ -125,9 +125,11 @@ def get_vendor_accts(vendor_id: int) -> QuerySet:
     return vendor_accts
 
 
-def get_po_header(po_number: str) -> PoHeaderView:
-    po_header = get_object_or_404(PoHeaderView, po_number=po_number)
-    return po_header
+def get_po_headers(po_number: str) -> QuerySet:
+    po_headers = PoHeaderView.objects.filter(po_number=po_number).order_by(
+        "-approve_date"
+    )
+    return po_headers
 
 
 def get_po_header_by_po_id(po_id: int) -> PoHeaderView:
@@ -147,9 +149,16 @@ def get_po_lines_by_line_id(line_item_id: int) -> QuerySet:
     return po_lines
 
 
-def get_inv_header(inv_number: str) -> InvoiceHeaderView:
-    inv_header = get_object_or_404(InvoiceHeaderView, invoice_number=inv_number)
+def get_inv_header_by_inv_id(invoice_id: int) -> InvoiceHeaderView:
+    inv_header = InvoiceHeaderView.objects.get(invoice_id=invoice_id)
     return inv_header
+
+
+def get_inv_headers(inv_number: str) -> QuerySet:
+    inv_headers = InvoiceHeaderView.objects.filter(invoice_number=inv_number).order_by(
+        "vendor_code"
+    )
+    return inv_headers
 
 
 def get_inv_lines(invoice_id: int) -> QuerySet:

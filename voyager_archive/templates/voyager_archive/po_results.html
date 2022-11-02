@@ -1,0 +1,22 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+{% if po_headers %}
+<table class="data-display">
+    <tr>
+        <th>PO Number</th>
+        <th>Vendor Code</th>
+        <th>Approved Date</th>
+    </tr>
+    {% for po_header in po_headers %}
+    <tr>
+        <td><a href="{% url 'po_display' po_header.po_id %}">{{ po_header.po_number }}</a></td>
+        <td>{{ po_header.vendor_code }}</td>
+        <td>{{ po_header.approve_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Your search found no purchase orders.</p>
+{% endif %}
+{% endblock %}
