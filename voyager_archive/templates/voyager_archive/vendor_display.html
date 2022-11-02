@@ -75,8 +75,8 @@
     <div class="column">
         {% if vendor_accts %}
         <h2>Vendor Account Information</h2>
-        {% for acct in vendor_accts %}
         <table class="data-display">
+            {% for acct in vendor_accts %}
             <tr>
                 <td class="label">Account Name</td>
                 <td>{{ acct.account_name }}</td>
@@ -101,12 +101,12 @@
                 <td class="label">Default PO Type</td>
                 <td>{{ acct.default_po_type }}</td>
             </tr>
+            {% if not forloop.last %}
+            <hr>
+            {% endif %}
+            {% endfor %}
         </table>
-        {% if not forloop.last %}
-        <hr>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
+    {% endif %}
     </div>
 </div>
 {% endblock %}

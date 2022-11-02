@@ -182,7 +182,7 @@ select
 ,	ili.piece_identifier
 ,	ilif.split_fund_seq
 ,	round((ilif.percentage / 1000000), 2) as percentage
-,	ilif.amount / 100 as usd_amount
+,	get_usd_amount(ilif.amount, i.conversion_rate) / 100 as usd_amount
 ,	l.ledger_name
 ,	f.fund_name
 ,	f.fund_code
@@ -275,7 +275,7 @@ select
 ,	get_usd_amount(li.line_price, po.conversion_rate) / 100 as line_price
 ,	lif.split_fund_seq
 ,	round((lif.percentage / 1000000), 2) as percentage
-,	lif.amount as raw_amount
+,	lif.amount / 100 as raw_amount
 ,	get_usd_amount(lif.amount, po.conversion_rate) / 100 as usd_amount
 ,	li.quantity
 ,	lg.ledger_name
