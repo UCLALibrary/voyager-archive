@@ -12,17 +12,35 @@
     flex: 50%;
     padding: 5px;
   }
-  
-  table.data-display {
+
+  table.marc-display {
     border-collapse: collapse;
     border-spacing: 0;
     table-layout: fixed;
     width: 100%;
     border: 1px solid #ddd;
   }
+
+  table.marc-display th, table.marc-display td {
+    text-align: left;
+    vertical-align: top;
+    padding: 6px;
+  }
   
+  table.marc-display tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  table.data-display {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+
   table.data-display th, table.data-display td {
     text-align: left;
+    vertical-align: top;
     padding: 6px;
   }
   
