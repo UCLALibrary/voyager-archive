@@ -101,11 +101,10 @@
                 <td class="label">Default PO Type</td>
                 <td>{{ acct.default_po_type }}</td>
             </tr>
-            {% comment %}Separate accounts with a blank row{% endcomment %}
+            {% comment %}Separate accounts with a divider{% endcomment %}
             {% if not forloop.last %}
             <tr>
-                <td></td>
-                <td></td>
+                <td colspan="2"><hr></td>
             </tr>
             {% endif %}
             {% endfor %}
