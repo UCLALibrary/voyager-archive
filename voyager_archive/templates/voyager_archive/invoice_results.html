@@ -1,0 +1,22 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+{% if inv_headers %}
+<table class="data-display">
+    <tr>
+        <th>Invoice Number</th>
+        <th>Vendor Code</th>
+        <th>Invoice Date</th>
+    </tr>
+    {% for inv_header in inv_headers %}
+    <tr>
+        <td><a href="{% url 'invoice_display' inv_header.invoice_id %}">{{ inv_header.invoice_number }}</a></td>
+        <td>{{ inv_header.vendor_code }}</td>
+        <td>{{ inv_header.invoice_date|date:"DATE_FORMAT" }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Your search found no invoices.</p>
+{% endif %}
+{% endblock %}

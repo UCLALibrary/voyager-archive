@@ -33,6 +33,7 @@ SET synchronous_commit TO off;
 
 COPY mfhd_item (mfhd_id,item_id,item_enum,chron,year,caption,freetext) FROM STDIN;
 12507598	12066882	v.1-2	\N	\N	\N	\N
+12507598	99999999	v.1-2	\N	\N	\N	\N
 \.
 
 COMMIT;
@@ -45,6 +46,7 @@ SET synchronous_commit TO off;
 
 COPY item_barcode (item_id,item_barcode,barcode_status,barcode_status_date) FROM STDIN;
 12066882	L0112367321	1	2020-12-16 05:01:56
+99999999	L0112367321	1	2020-12-16 05:01:56
 \.
 
 COMMIT;
@@ -57,6 +59,7 @@ SET synchronous_commit TO off;
 
 COPY item (item_id,perm_location,temp_location,item_type_id,temp_item_type_id,copy_number,on_reserve,reserve_charges,pieces,price,spine_label,historical_charges,historical_browses,recalls_placed,holds_placed,create_date,modify_date,create_operator_id,modify_operator_id,create_location_id,modify_location_id,item_sequence_number,historical_bookings,media_type_id,short_loan_charges,magnetic_media,sensitize) FROM STDIN;
 12066882	146	0	2	0	0	N	0	1	0	\N	0	0	0	0	2020-12-16 05:01:56	2020-12-16 09:26:46	uclaloader	jtanaka	203	148	1	0	0	0	N	Y
+99999999	146	0	2	0	0	N	0	1	0	\N	0	0	0	0	2020-12-16 05:01:56	2020-12-16 09:26:46	uclaloader	jtanaka	203	148	1	0	0	0	N	Y
 \.
 
 COMMIT;
@@ -446,6 +449,7 @@ SET synchronous_commit TO off;
 
 COPY vendor (vendor_id,vendor_type,normal_vendor_type,vendor_code,normal_vendor_code,vendor_name,normal_vendor_name,federal_tax_id,institution_id,default_currency,claim_interval,claim_count,cancel_interval,ship_via,create_date,create_opid,update_date,update_opid) FROM STDIN;
 3764	VE	VE	LQZ	LQZ	Library of Congress Cataloging Distribution Service	LIBRARY OF CONGRESS CATALOGING DISTRIBUTION SERVICE	\N	006039003	\N	0	0	0	\N	2004-06-04 11:33:09	CONVERSION	2021-05-21 11:14:52	rrivero
+9999	VE	VE	LQZ	LQZ	DUP Library of Congress Cataloging Distribution Service	LIBRARY OF CONGRESS CATALOGING DISTRIBUTION SERVICE	\N	006039003	\N	0	0	0	\N	2004-06-04 11:33:09	CONVERSION	2021-05-21 11:14:52	rrivero
 \.
 
 COMMIT;

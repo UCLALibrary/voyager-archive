@@ -1,0 +1,20 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+{% if vendors %}
+<table class="data-display">
+    <tr>
+        <th>Vendor Code</th>
+        <th>Vendor Name</th>
+    </tr>
+    {% for vendor in vendors %}
+    <tr>
+        <td><a href="{% url 'vendor_display' vendor.vendor_id %}">{{ vendor.vendor_code }}</a></td>
+        <td>{{ vendor.vendor_name }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Your search found no vendors.</p>
+{% endif %}
+{% endblock %}

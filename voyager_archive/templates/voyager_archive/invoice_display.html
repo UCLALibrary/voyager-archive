@@ -17,6 +17,10 @@
                 </td>
             </tr>
             <tr>
+                <td class="label">Invoice Date</td>
+                <td>{{ inv_header.invoice_date|date:"DATE_FORMAT" }}</td>
+            </tr>
+            <tr>
                 <td class="label">Voucher Number</td>
                 <td>{{ inv_header.voucher_number }}</td>
             </tr>

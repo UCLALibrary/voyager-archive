@@ -19,6 +19,11 @@ urlpatterns = [
         name="po_line_display",
     ),
     path(
+        "invoice_display/<int:invoice_id>",
+        views.invoice_display,
+        name="invoice_display",
+    ),
+    path(
         "inv_line_display/<int:inv_line_item_id>",
         views.inv_line_display,
         name="inv_line_display",

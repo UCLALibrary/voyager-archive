@@ -1,0 +1,28 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+{% if items %}
+<table class="data-display">
+    <tr>
+        <th>Barcode</th>
+        <th>Location</th>
+        <th>Item Type</th>
+        <th>Enumeration</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>
+            {% comment %}Some items lack barcodes{% endcomment %}
+            <a href="{% url 'item_display' item.item_id %}">
+                {% if item.item_barcode %}{{ item.item_barcode }}{% else %}No barcode{% endif %}</a>
+        </td>
+        <td>{{ item.perm_location }}</td>
+        <td>{{ item.item_type }}</td>
+        <td>{{ item.item_enum }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Your search found no items.</p>
+{% endif %}
+{% endblock %}
