@@ -458,6 +458,7 @@ SET synchronous_commit TO off;
 
 COPY vendor_account (account_id,vendor_id,account_number,account_name,default_po_type,deposit,default_discount,account_status,status_date) FROM STDIN;
 1	3764	552406-010	YRL Serials	5	\N	0	0	2004-07-15 13:47:24
+2	3764	552406-015	YRL Fake Monos	5	\N	0	0	2004-07-15 13:47:24
 \.
 
 COMMIT;
