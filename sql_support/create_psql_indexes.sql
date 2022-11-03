@@ -27,6 +27,12 @@ create index fund_payment_payment_id on public.fund_payment using btree (payment
 create index ledger_pkey on public.ledger using btree (ledger_id);
 create unique index fund_ledger_id_fund_id on public.fund using btree (ledger_id, fund_id);
 create index price_adjustment_object_id on public.price_adjustment using btree (object_id);
+create unique index item_stat_code_pkey on public.item_stat_code using btree (item_stat_id);
+create index item_stats_item_id on public.item_stats using btree (item_id);
+create index item_stats_item_stat_id on public.item_stats using btree (item_stat_id);
+create unique index item_status_type_pkey on public.item_status_type using btree (item_status_type);
+create index item_status_item_id on public.item_status using btree (item_id);
+create index item_status_item_status on public.item_status using btree (item_status);
 commit;
 
 -- List index info
