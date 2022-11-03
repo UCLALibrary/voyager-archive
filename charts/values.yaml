@@ -10,7 +10,7 @@ image:
   # the same image automatically, set application tag version
   # here (once) instead of in each environment-specific values file.
   # TODO: How to correctly handle this if we add a test cluster?
-  tag: v0.9.9d
+  tag: v0.9.9e
   pullPolicy: Always
 
 nameOverride: ""
@@ -36,7 +36,7 @@ ingress:
 django:
   env:
     run_env: "prod"
-    debug: "false"
+    debug: false
     allowed_hosts: []
     #  - localhost
     #  - 127.0.0.1
