@@ -144,3 +144,7 @@ def vendor_display(request: HttpRequest, vendor_id: int) -> None:
     vendor_accts = get_vendor_accts(vendor_id)
     context = {"vendor": vendor, "vendor_accts": vendor_accts}
     return render(request, "voyager_archive/vendor_display.html", context)
+
+
+def help(request: HttpRequest) -> None:
+    return render(request, "voyager_archive/help.html")
