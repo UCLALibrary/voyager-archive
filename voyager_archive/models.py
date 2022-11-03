@@ -2355,6 +2355,8 @@ class ItemView(models.Model):
     item_sequence_number = models.DecimalField(
         max_digits=38, decimal_places=0, blank=True, null=True
     )
+    item_status = models.TextField(blank=True, null=True)
+    item_stat_cats = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False  # Created from a view. Don't remove.
