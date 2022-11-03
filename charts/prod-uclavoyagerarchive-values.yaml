@@ -39,7 +39,7 @@ ingress:
 django:
   env:
     run_env: "prod"
-    debug: False
+    debug: false
     allowed_hosts:
       - ucla-voy-archive.library.ucla.edu
     csrf_trusted_origins:
