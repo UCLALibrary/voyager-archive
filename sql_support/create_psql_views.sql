@@ -34,6 +34,8 @@ select
 ,	i.modify_operator_id
 ,	(select location_code from location where location_id = i.modify_location_id) as modify_location
 ,	i.item_sequence_number
+,	get_all_item_status(i.item_id) as item_status
+,	get_all_item_stat_cats(i.item_id) as item_stat_cats
 from item i
 inner join mfhd_item mi on i.item_id = mi.item_id
 inner join location l1 on i.perm_location = l1.location_id
