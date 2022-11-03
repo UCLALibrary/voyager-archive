@@ -48,4 +48,9 @@ urlpatterns = [
         views.vendor_display,
         name="vendor_display",
     ),
+    path(
+        "help",
+        views.help,
+        name="help",
+    ),
 ]

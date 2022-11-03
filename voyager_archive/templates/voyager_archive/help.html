@@ -1,0 +1,142 @@
+{% extends 'voyager_archive/base.html' %}
+{% block content %}
+<body lang=EN-US link=blue vlink=purple style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<h1>Voyager Archive</h1>
+
+<p>The Voyager Archive (VA) contains data from UCLA's Voyager databases.
+&nbsp;Data from each Voyager database is preserved in a separate Archive
+database.&nbsp; This preserves the Voyager structure, unlike Alma / UCLS which
+merges data from all 3 Voyager databases into one system.</p>
+
+<p>Links to each Archive:</p>
+
+<ul type=disc>
+ <li class=MsoNormal><a href="https://ethno-voy-archive.library.ucla.edu/">Ethnomusicology</a></li>
+ <li class=MsoNormal><a href="https://ftva-voy-archive.library.ucla.edu/">Film
+     and Television Archive</a></li>
+ <li class=MsoNormal><a href="https://ucla-voy-archive.library.ucla.edu/">UCLA
+     (main database)</a></li>
+</ul>
+
+<h4 id="VoyagerArchive-HowtousetheVoyagerArchive?">How to use the Voyager
+Archive?</h4>
+
+<p>The VA user interface is designed for known-item searching.&nbsp; If
+something in Alma might not have migrated correctly from Voyager, use the
+appropriate Voyager identifier to look it up in the VA.</p>
+
+<p>Searching can be done by:</p>
+
+<ul type=disc>
+ <li class=MsoNormal>MARC record id (the 001 field), for authority,
+     bibliographic, and holdings records </li>
+ <ul type=circle>
+  <li class=MsoNormal>Alma records add a suffix to Voyager record ids, like <code><span
+      style='font-size:10.0pt'>12345-ucladb</span></code> .&nbsp; Search just
+      for the numbers, like <code><span style='font-size:10.0pt'>12345</span></code>
+      .</li>
+ </ul>
+ <li class=MsoNormal>Item barcode</li>
+ <li class=MsoNormal>Purchase order number</li>
+ <li class=MsoNormal>Invoice number</li>
+ <li class=MsoNormal>Vendor code</li>
+</ul>
+
+<p>If a search finds just one record, the full record will display.&nbsp; If a
+search finds multiple records, brief information about each will display.&nbsp;
+Click the link to see the full record.</p>
+
+<p>When viewing a record, scroll down to see related data, and click links to
+navigate between related records.&nbsp; For example, brief holdings information
+displays below bibliographic records, and brief item information displays below
+holdings records.</p>
+
+<p>Click links to move between records, or use the &quot;Search&quot; form at
+the top of each page to start a new search.</p>
+
+<h4 id="VoyagerArchive-What'sintheVoyagerArchive?">What's in the Voyager
+Archive?</h4>
+
+<p>The VA contains the following data:</p>
+
+<ul type=disc>
+ <li class=MsoNormal>All MARC records: authority, bibliographic, and holdings
+     (aka mfhd)</li>
+ <li class=MsoNormal>All item records</li>
+ <li class=MsoNormal>All item circulation history, including requests and
+     fines/fees</li>
+ <ul type=circle>
+  <li class=MsoNormal>This does <strong>not</strong> include any patron
+      information</li>
+ </ul>
+ <li class=MsoNormal>All locations</li>
+ <li class=MsoNormal>All purchase orders</li>
+ <li class=MsoNormal>All invoices</li>
+ <li class=MsoNormal>All vendors, including account records </li>
+ <ul type=circle>
+  <li class=MsoNormal>Vendor addresses were <strong>not</strong> archived</li>
+ </ul>
+ <li class=MsoNormal>All ledgers and funds</li>
+ <li class=MsoNormal>All fund transactions</li>
+ <li class=MsoNormal>Various &quot;look-up&quot; tables, which help translate
+     Voyager's internal data into readable data</li>
+</ul>
+
+<h4 id="VoyagerArchive-What'sNOTintheVoyagerArchive?">What's NOT in the Voyager
+Archive?</h4>
+
+<p>The VA does not contain the following data:</p>
+
+<ul type=disc>
+ <li class=MsoNormal>Patrons, or any data about / related to them</li>
+ <li class=MsoNormal>Course reserves </li>
+ <ul type=circle>
+  <li class=MsoNormal>Item records have a count of historical reserve charges</li>
+ </ul>
+ <li class=MsoNormal>Circulation calendars and policy matrices</li>
+ <li class=MsoNormal>Vendor addresses </li>
+ <ul type=circle>
+  <li class=MsoNormal>These were difficult to archive, and determined to be of
+      no historical value</li>
+ </ul>
+ <li class=MsoNormal>Permissions / security profiles</li>
+ <li class=MsoNormal>Headings or other MARC-derived data used for search /
+     discovery </li>
+ <ul type=circle>
+  <li class=MsoNormal>Authority and bibliographic MARC records are archived,
+      but not Voyager-derived headings relationships</li>
+ </ul>
+ <li class=MsoNormal>Voyager-specific MARC editing history (the &quot;History
+     tab&quot; in the Voyager cataloging client)</li>
+ <li class=MsoNormal>Serial patterns and predictive check-in data</li>
+</ul>
+
+<p>For a complete list of all Voyager tables with with notes on purpose and
+archiving decisions, see <a
+href="https://docs.library.ucla.edu/x/wyXjDw">Voyager Table Archiving
+Decisions</a> (UCLA Library staff only).</p>
+
+<h4 id="VoyagerArchive-Questions/suggestions/problems/bugs?">Questions /
+suggestions / problems / bugs?</h4>
+
+<p>Please use the <a
+href="https://jira.library.ucla.edu/servicedesk/customer/portal/22/create/275">General
+staff technology support form</a> to let us know how the Voyager Archive could
+be improved.&nbsp; Or, if you need a report on a lot of Voyager data, please
+provide details and we'll try to help.</p>
+
+<h4 id="VoyagerArchive-Otherarchives?">Other archives?</h4>
+
+<p>Users who enjoyed the Voyager Archive might also enjoy the <a
+href="https://unitproj.library.ucla.edu/lis/archive/taos/archive.cfm">DRA Taos
+Archive</a> or the <a
+href="https://unitproj.library.ucla.edu/lis/archive/classic/archive.cfm">DRA
+Classic Archive</a>.</p>
+
+</div>
+
+
+{% endblock %}
