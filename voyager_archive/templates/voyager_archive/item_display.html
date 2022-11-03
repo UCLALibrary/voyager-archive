@@ -25,13 +25,14 @@
                 <td class="label">Temporary Item Type</td>
                 <td>{{ item.temp_item_type }}</td>
             </tr>
+            {% comment %}item_status/stat_cats can be empty - show None for consistency{% endcomment %}
             <tr>
                 <td class="label">Item Status</td>
-                <td>{{ item.item_status }}</td>
+                <td>{{ item.item_status|default:"None" }}</td>
             </tr>
             <tr>
                 <td class="label">Item Stat Cats</td>
-                <td>{{ item.item_stat_cats }}</td>
+                <td>{{ item.item_stat_cats|default:"None" }}</td>
             </tr>
             <tr>
                 <td class="label">Enumeration</td>
