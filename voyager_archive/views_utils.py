@@ -1,5 +1,6 @@
-from django.shortcuts import get_object_or_404
 from django.http.request import HttpRequest  # for code completion
+from django.http import Http404
+from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from pymarc import Record
 from .forms import VoyArchiveForm
@@ -31,17 +32,32 @@ def get_search_form(request: HttpRequest = None) -> VoyArchiveForm:
 
 
 def get_auth_record(auth_id: int) -> AuthRecordView:
-    model_record = get_object_or_404(AuthRecordView, marc_record_id=auth_id)
+    try:
+        model_record = AuthRecordView.objects.get(marc_record_id=auth_id)
+    except AuthRecordView.DoesNotExist:
+        raise Http404(f"Authority record {auth_id} does not exist.")
+    except ValidationError:
+        raise Http404(f"{auth_id} is not a valid record id.")
     return get_marc_fields(model_record)
 
 
 def get_bib_record(bib_id: int) -> BibRecordView:
-    model_record = get_object_or_404(BibRecordView, marc_record_id=bib_id)
+    try:
+        model_record = BibRecordView.objects.get(marc_record_id=bib_id)
+    except BibRecordView.DoesNotExist:
+        raise Http404(f"Bibliographic record {bib_id} does not exist.")
+    except ValidationError:
+        raise Http404(f"{bib_id} is not a valid record id.")
     return get_marc_fields(model_record)
 
 
 def get_mfhd_record(mfhd_id: int) -> MfhdRecordView:
-    model_record = get_object_or_404(MfhdRecordView, marc_record_id=mfhd_id)
+    try:
+        model_record = MfhdRecordView.objects.get(marc_record_id=mfhd_id)
+    except MfhdRecordView.DoesNotExist:
+        raise Http404(f"Holdings record {mfhd_id} does not exist.")
+    except ValidationError:
+        raise Http404(f"{mfhd_id} is not a valid record id.")
     return get_marc_fields(model_record)
 
 
