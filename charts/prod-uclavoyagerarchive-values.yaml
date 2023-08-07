@@ -55,8 +55,8 @@ django:
     enabled: "true"
     env:
       # Application database used by django
-      db_password: "/systems/prodsoftwaredev/voyager-archive/db_password"
-      django_secret_key: "/systems/prodsoftwaredev/voyager-archive/django_secret_key"
+      db_password: "/systems/prodrke01/voyager-archive/db_password"
+      django_secret_key: "/systems/prodrke01/voyager-archive/django_secret_key"
 
 resources:
   limits:
