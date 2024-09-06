@@ -11,8 +11,8 @@ It is limited to a variety of known-item searches (record ids, po numbers, invoi
 
 The development environment requires:
 * git
-* docker (current version recommended: 20.10.12)
-* docker-compose (at least version 1.25.0; current recommended: 1.29.2)
+* docker (current version recommended: 27.0.3)
+* docker compose (now part of docker itself)
 
 #### PostgreSQL container
 
@@ -20,8 +20,8 @@ The development database is PostgreSQL 12.
 
 #### Django container
 
-This uses Django 4.1, which requires Python 3.8 or later; the container uses Python 3.9.
-It shouldn't matter if Python 3.9 is used locally, as all code runs in the container.
+This uses Django 4.2, which requires Python 3.8 or later; the container uses Python 3.12.
+It shouldn't matter what version of Python is used locally, as all code runs in the container.
 
 The container runs via `docker_scripts/entrypoint.sh`, which
 * Updates container with any new requirements, if the image hasn't been rebuilt (DEV environment only).
@@ -32,7 +32,12 @@ The container runs via `docker_scripts/entrypoint.sh`, which
 
 #### pgAdmin container
 
-For convenience during development, pgAdmin 4 is available.
+For convenience during development, pgAdmin 4 is optionally available.
+Start the system via:
+`docker compose -f docker-compose_PGADMIN.yml up -d`
+Be sure to specify the file when stopping too:
+`docker compose -f docker-compose_PGADMIN.yml down`
+
 * [Login page](http://localhost:5050)
 * Log in with `PGADMIN_DEFAULT_*` credentials from `docker_compose.yml`
 * First time: Register a server.
@@ -53,28 +58,28 @@ For convenience during development, pgAdmin 4 is available.
 
 3. Build using docker-compose.
 
-   `$ docker-compose build`
+   `$ docker compose build`
 
 4. Bring the system up, with containers running in the background.
 
-   `$ docker-compose up -d`
+   `$ docker compose up -d`
 
 5. Logs can be viewed, if needed (`-f` to tail logs).
 
    ```
-   $ docker-compose logs -f db
-   $ docker-compose logs -f django
+   $ docker compose logs -f db
+   $ docker compose logs -f django
    ```
 
 6. Run commands in the containers, if needed.
 
    ```
-   $ docker-compose exec db psql -U voyager_archive
-   $ docker-compose exec django bash
+   $ docker compose exec db psql -U voyager_archive
+   $ docker compose exec django bash
    # Django-aware Python shell
-   $ docker-compose exec django python manage.py shell
+   $ docker compose exec django python manage.py shell
    # Apply new migrations without a restart
-   $ docker-compose exec django python manage.py migrate
+   $ docker compose exec django python manage.py migrate
    ```
 To create database objects and load sample data, see [Database setup](#database-setup-initial).
 
@@ -84,11 +89,11 @@ To create database objects and load sample data, see [Database setup](#database-
 
 8. Edit code locally.  All changes are immediately available in the running container, but if a restart is needed:
 
-   `$ docker-compose restart django`
+   `$ docker compose restart django`
 
 9. Shut down the system when done.
 
-   `$ docker-compose down`
+   `$ docker compose down`
 
 ### Database setup (Initial)
 
