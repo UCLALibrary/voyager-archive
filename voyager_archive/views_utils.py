@@ -98,7 +98,7 @@ def get_marc_fields(model_record: type[MARCRecordView]) -> dict:
             for delim in subfield_default_dict.keys():
                 subfield_dict[delim] = subfield_default_dict[delim]
             tmp_rec_dict["subfields"] = subfield_dict
-        except Exception as e:
+        except Exception:
             # If subfields don't exist an exception is thrown
             pass
 
