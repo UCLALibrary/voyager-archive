@@ -1,14 +1,36 @@
 import logging
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.http.request import HttpRequest  # for code completion
-from django.http.response import HttpResponse
-from .views_utils import *
+from django.http.request import HttpRequest
+from voyager_archive.views_utils import (
+    get_auth_record,
+    get_bib_record,
+    get_inv_adjustment,
+    get_inv_adjustments,
+    get_inv_header_by_inv_id,
+    get_inv_headers,
+    get_inv_lines,
+    get_inv_lines_by_line_id,
+    get_item_by_id,
+    get_item_summary,
+    get_items,
+    get_mfhd_record,
+    get_mfhd_summary,
+    get_po_header_by_po_id,
+    get_po_headers,
+    get_po_lines,
+    get_po_lines_by_line_id,
+    get_search_form,
+    get_vendor_accts,
+    get_vendor_by_vendor_id,
+    get_vendors,
+)
 
 
 logger = logging.getLogger(__name__)
 
 
-def search(request: HttpRequest) -> None:
+def search(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         # Get form with search data from this request,
         # via utility function which also adds form
@@ -79,20 +101,20 @@ def search(request: HttpRequest) -> None:
         return render(request, "voyager_archive/search.html", context)
 
 
-def po_line_display(request: HttpRequest, po_line_item_id: int) -> None:
+def po_line_display(request: HttpRequest, po_line_item_id: int) -> HttpResponse:
     po_lines = get_po_lines_by_line_id(po_line_item_id)
     context = {"po_lines": po_lines}
     return render(request, "voyager_archive/po_line_display.html", context)
 
 
-def po_display(request: HttpRequest, po_id: int) -> None:
+def po_display(request: HttpRequest, po_id: int) -> HttpResponse:
     po_header = get_po_header_by_po_id(po_id)
     po_lines = get_po_lines(po_id)
     context = {"po_header": po_header, "po_lines": po_lines}
     return render(request, "voyager_archive/po_display.html", context)
 
 
-def marc_display(request: HttpRequest, marc_type: str, record_id: int) -> None:
+def marc_display(request: HttpRequest, marc_type: str, record_id: int) -> HttpResponse:
     mfhd_summary = None
     item_summary = None
     if marc_type == "bib":
@@ -109,7 +131,7 @@ def marc_display(request: HttpRequest, marc_type: str, record_id: int) -> None:
     return render(request, "voyager_archive/marc_display.html", context)
 
 
-def invoice_display(request: HttpRequest, invoice_id: int) -> None:
+def invoice_display(request: HttpRequest, invoice_id: int) -> HttpResponse:
     inv_header = get_inv_header_by_inv_id(invoice_id)
     inv_lines = get_inv_lines(invoice_id)
     inv_adjustments = get_inv_adjustments(invoice_id)
@@ -121,30 +143,35 @@ def invoice_display(request: HttpRequest, invoice_id: int) -> None:
     return render(request, "voyager_archive/invoice_display.html", context)
 
 
-def inv_line_display(request: HttpRequest, inv_line_item_id: int) -> None:
+def inv_line_display(request: HttpRequest, inv_line_item_id: int) -> HttpResponse:
     inv_lines = get_inv_lines_by_line_id(inv_line_item_id)
     context = {"inv_lines": inv_lines}
     return render(request, "voyager_archive/invoice_line_display.html", context)
 
 
-def inv_adj_display(request: HttpRequest, payment_id: int) -> None:
+def inv_adj_display(request: HttpRequest, payment_id: int) -> HttpResponse:
     inv_adjustment = get_inv_adjustment(payment_id)
     context = {"inv_adjustment": inv_adjustment}
     return render(request, "voyager_archive/invoice_adjustment_display.html", context)
 
 
-def item_display(request: HttpRequest, item_id: int) -> None:
+def item_display(request: HttpRequest, item_id: int) -> HttpResponse:
     item = get_item_by_id(item_id)
     context = {"item": item}
     return render(request, "voyager_archive/item_display.html", context)
 
 
-def vendor_display(request: HttpRequest, vendor_id: int) -> None:
+def vendor_display(request: HttpRequest, vendor_id: int) -> HttpResponse:
     vendor = get_vendor_by_vendor_id(vendor_id)
     vendor_accts = get_vendor_accts(vendor_id)
     context = {"vendor": vendor, "vendor_accts": vendor_accts}
     return render(request, "voyager_archive/vendor_display.html", context)
 
 
-def help(request: HttpRequest) -> None:
+def help(request: HttpRequest) -> HttpResponse:
     return render(request, "voyager_archive/help.html")
+
+
+def release_notes(request: HttpRequest) -> HttpResponse:
+    """Display release notes."""
+    return render(request, "voyager_archive/release_notes.html")

@@ -1,0 +1,22 @@
+{% extends 'voyager_archive/base.html' %}
+
+{% block content %}
+<h3>Release Notes</h3>
+<hr/>
+
+<h4>1.1.0</h4>
+<p><i>September 9, 2024</i></p>
+<ul>
+    <li>Update Django and other packages for security patches.</li>
+    <li>Update pymarc from version 4.2.2 to 5.2.2.</li>
+    <li>Fix display issues caused by pymarc changes.</li>
+    <li>Change deployment to require explicit version tag in all prod values files.</li>
+</ul>
+
+<h4>1.0.0</h4>
+<p><i>November 3, 2022</i></p>
+<ul>
+    <li>First production release.</li>
+</ul>
+
+{% endblock %}
