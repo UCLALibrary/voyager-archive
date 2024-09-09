@@ -141,3 +141,12 @@ The current log format includes:
 * Logger name: to distinguish between sources of messages (`django` vs `voyager_archive` application)
 * Module: somewhat redundant with logger name
 * Message: The main thing being logged
+
+### Deployment Process
+The image for this application is deployed into 3 instances, each pointing at a separate database:
+* [Ethnomusicology Archive](https://ethno-voy-archive.library.ucla.edu/)
+* [Film and Television Archive](https://ftva-voy-archive.library.ucla.edu/)
+* [UCLA Library Archive](https://ucla-voy-archive.library.ucla.edu/)
+
+This means that the `image.tag` property in all 3 Helm chart values files (`charts/prod-*-values.yaml`)
+must be updated, and identical.
