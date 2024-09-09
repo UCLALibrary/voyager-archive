@@ -27,7 +27,12 @@
                     {% if field.tag == "004" %}
                     <a href="{% url 'marc_display' 'bib' field.data %}">{{ field.data }}</a>
                     {% else %}
-                    {{ field.data }}
+                        {% comment %}
+                        Fixed fields (001-009) have field.data; 010-999 have subfields, below.
+                        {% endcomment %}
+                        {% if field.data %}
+                            {{ field.data }}
+                        {% endif %}
                     {% endif %}
                     {% for delimiter, values in field.subfields.items %}
                         {% for value in values %}
