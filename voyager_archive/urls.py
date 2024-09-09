@@ -53,4 +53,5 @@ urlpatterns = [
         views.help,
         name="help",
     ),
+    path("release_notes/", views.release_notes, name="release_notes"),
 ]
