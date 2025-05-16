@@ -8,7 +8,7 @@ replicaCount: 1
 image:
   repository: uclalibrary/voyager-archive
   # tag needs to be updated in all 3 prod-*-values.yaml files for deployment.
-  tag: 1.1.1
+  tag: 1.1.2
   pullPolicy: Always
 
 nameOverride: ""
@@ -43,7 +43,7 @@ django:
       - ucla-voy-archive.library.ucla.edu
     csrf_trusted_origins:
       - https://ucla-voy-archive.library.ucla.edu
-    db_backend: "django.db.backends.postgresql_psycopg2"
+    db_backend: "django.db.backends.postgresql"
     db_name: "ucla_voy_archive"
     db_user: "voy_archive_access"
     db_host: "p-d-postgres.library.ucla.edu"
