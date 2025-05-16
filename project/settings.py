@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 import os
 from pathlib import Path
 
@@ -130,7 +129,7 @@ USE_TZ = True
 # Django will add this URL, and serve static files from here
 STATIC_URL = "/static/"
 # Where on the file system should Django find our custom static files?
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "voyager_archive/static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Where will all static files - our custom + Django's?
 # This matters only when not using runserver, and using collectstaticfiles.
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
